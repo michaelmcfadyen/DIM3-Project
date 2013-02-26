@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from django import forms
 
 # Create your models here.
 class User(models.Model):
@@ -58,6 +59,20 @@ class Promoter(User):
 
 	def __unicode__(self):
              return self.name
+
+class AdvertForm(forms.ModelForm):
+        title = forms.CharField(max_length=50,
+                help_text='Please enter the title of the Event:')
+	start_time = forms.TimeField(help_text='Please enter the start time of the Event:')
+	duration = forms.TimeField(help_text='Please enter the duration of the slot:')
+	date = forms.DateField(help_text='Please enter the date of the event:')
+	description = forms.CharField(max_length=5000,help_text='Please enter a description for the event:')
+	band = forms.CharField(max_length=50,help_text='Please enter the headline band for the event:')
+	
+        class Meta:
+                # associate the model, Category, with the ModelForm
+                model = Advert
+		fields = ('title','start_time','duration','date','description','band')
 
 #class UserProfile(models.Model):
 #        # This field is required.
