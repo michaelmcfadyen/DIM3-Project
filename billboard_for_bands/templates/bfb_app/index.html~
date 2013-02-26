@@ -1,6 +1,4 @@
-<HTML>
-<HEADER><TITLE>Home</TITLE></HEADER>
-<BODY>
+{% extends 'base.html' %}
 Welcome to Billboard For Bands... Your Welcome
 <IMG SRC="{{ STATIC_URL }}imgs/billboard_logo.jpg" />
 <a href="http://127.0.0.1:8000/bfb_app/about"> About</a>
@@ -14,5 +12,4 @@ Welcome to Billboard For Bands... Your Welcome
         <P>No Adverts at present.</P>
 {% endif %}
 <a href="/bfb_app/register/">Register Here</a>
-</BODY>
-</HTML>
+

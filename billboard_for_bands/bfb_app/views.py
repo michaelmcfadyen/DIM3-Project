@@ -6,6 +6,10 @@ from bfb_app.models import UserForm, UserProfileForm
 from bfb_app.models import Advert,AdvertForm
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+def base(request):
+	template = loader.get_template('bfb_app/base.html')
+	context = RequestContext(request,{}) 
+	return HttpResponse(template.render(context))
 
 def index(request):
         # select the appropriate template to use
@@ -32,13 +36,13 @@ def add_advert(request):
                 if form.is_valid():
                         # the form has been correctly filled in,
                         # so lets save the data to the model
-                        ad = form.save(commit=True)
+                        ad = form.save(commit=False)
                         # show the index page with the list of categories
                         return index(request)
                 else:
                         # the form contains errors,
                         # show the form again, with error messages
-                        pass
+                        print form.errors
         else:
                 # a GET request was made, so we simply show a blank/empty form.
                 form = AdvertForm()
