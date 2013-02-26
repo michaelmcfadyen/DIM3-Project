@@ -5,13 +5,13 @@ from django.forms import ModelForm
 # Create your models here.
 class Promoter(models.Model):
 
-class Band(models.Model)
+class Band(models.Model):
 
-class Venue(models.Model)
+class Venue(models.Model):
 
-class Advert(models.Model)
+class Advert(models.Model):
 
-class Genre(models.Model)
+class Genre(models.Model):
 
 class UserProfile(models.Model):
         # This field is required.
