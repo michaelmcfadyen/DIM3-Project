@@ -72,23 +72,24 @@ class AdvertForm(forms.ModelForm):
         class Meta:
                 # associate the model, Category, with the ModelForm
                 model = Advert
-		fields = ('title','start_time','duration','date','description','band'
+		fields = ('title','start_time','duration','date','description','band')
 
-#class UserProfile(models.Model):
-#        # This field is required.
-#        user = models.OneToOneField(User)
-#        # These fields are optional
-#        website = models.URLField(blank=True)
-#        picture = models.ImageField(upload_to='imgs', blank=True)
-#
-#        def __unicode__(self):
-#                return self.user.username
-#
-#class UserForm(forms.ModelForm):
-#        class Meta:
-#                model = User
-#                fields = ["username", "email", "password"]
+class UserProfile(models.Model):
+        # This field is required.
+        user = models.OneToOneField(Promoter)
+        # These fields are optional
+        website = models.URLField(blank=True)
+        picture = models.ImageField(upload_to='imgs', blank=True)
 
-#class UserProfileForm(forms.ModelForm):
- #       class Meta:
-  #              model = UserProfile
+        def __unicode__(self):
+                return self.user.username
+
+class UserForm(forms.ModelForm):
+        class Meta:
+                model = User
+                fields = ["username", "emailaddress", "password"]
+
+class UserProfileForm(forms.ModelForm):
+       class Meta:
+              model = UserProfile
+	      fields = ['website','picture']

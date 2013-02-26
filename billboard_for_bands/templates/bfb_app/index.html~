@@ -11,7 +11,8 @@ Welcome to Billboard For Bands... Your Welcome
         {% endfor %}
         </UL>
 {% else %}
-        <P>No categories at present.</P>
+        <P>No Adverts at present.</P>
 {% endif %}
+<a href="/bfb_app/register/">Register Here</a>
 </BODY>
 </HTML>

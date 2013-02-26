@@ -2,8 +2,8 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 #from bfb_app.models import UserProfile
-#from bfb_app.models import UserForm, UserProfileForm
-from bfb_app.models import Advert
+from bfb_app.models import UserForm, UserProfileForm
+from bfb_app.models import Advert,AdvertForm
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
