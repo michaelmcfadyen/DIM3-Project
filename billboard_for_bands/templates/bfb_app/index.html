@@ -1,17 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'bfb_app/base.html' %}
 {% block content %}
 Welcome to Billboard For Bands... Your Welcome
 <IMG SRC="{{ STATIC_URL }}imgs/billboard_logo.jpg" />
 <a href="http://127.0.0.1:8000/bfb_app/about"> About</a>
-{% if cat_list %}
+{% if ad_list %}
         <UL>
-        {% for cat in cat_list %}
-                <LI>{{ cat.name }}</LI>
+        {% for ad in ad_list %}
+                <LI>{{ad.title}} - {{ad.band}} - {{ad.description}}</LI>
         {% endfor %}
         </UL>
 {% else %}
         <P>No Adverts at present.</P>
 {% endif %}
 <a href="/bfb_app/register/">Register Here</a>
+<a href="/bfb_app/adv_add/">Add Advertisement</a>
 {% endblock %}
 

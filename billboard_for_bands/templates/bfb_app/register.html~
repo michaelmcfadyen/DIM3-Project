@@ -11,5 +11,6 @@
                 <INPUT type="submit" name="submit" value="submit" />
         </FORM>
 {% endif %}
+{% endif %}
 <a href="http://127.0.0.1:8000/bfb_app/">Home</a>
 {% endblock %}

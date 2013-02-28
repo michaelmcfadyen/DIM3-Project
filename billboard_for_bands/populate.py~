@@ -1,0 +1,4 @@
+from bfb_app.models import Genre
+
+g = Genre(genre=')
+g.save()

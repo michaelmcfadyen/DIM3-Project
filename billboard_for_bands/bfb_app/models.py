@@ -4,13 +4,13 @@ from django.forms import ModelForm
 from django import forms
 
 # Create your models here.
-class User(models.Model):
-	username = models.CharField(max_length=100)
-	password = models.CharField(max_length=20)
-	emailaddress = models.CharField(max_length=100)
-	
-	class Meta:
-		abstract=True;
+#class User(models.Model):
+#	username = models.CharField(max_length=100)
+#	password = models.CharField(max_length=20)
+#	emailaddress = models.CharField(max_length=100)
+#	
+#	class Meta:
+#		abstract=True;
 
 class Artist(User):
 	name = models.CharField(max_length=50)
@@ -23,7 +23,7 @@ class Artist(User):
 		return self.name
 
 class Advert(models.Model):
-	artist = models.ManyToManyField(Artist)
+	artist= models.ManyToManyField(Artist,blank=True)
 	title = models.CharField(max_length = 50)
 	start_time = models.TimeField()
 	duration = models.TimeField()
@@ -44,7 +44,7 @@ class Genre(models.Model):
 
 
 class Venue(models.Model):
-	advert = models.ForeignKey(Advert)
+	advert = models.ForeignKey(Advert,blank=True)
 	name = models.CharField(max_length=100)	
 	address = models.CharField(max_length=500)
 	website = models.URLField()
@@ -53,7 +53,7 @@ class Venue(models.Model):
 		return self.name
 
 class Promoter(User):
-	advert = models.ForeignKey(Advert)
+	advert = models.ForeignKey(Advert,null=True,blank=True)
 	name = models.CharField(max_length=50)
 	phone_num = models.CharField(max_length=20)
 
@@ -61,35 +61,32 @@ class Promoter(User):
              return self.name
 
 class AdvertForm(forms.ModelForm):
-        title = forms.CharField(max_length=50,
-                help_text='Please enter the title of the Event:')
-	start_time = forms.TimeField(help_text='Please enter the start time of the Event:')
-	duration = forms.TimeField(help_text='Please enter the duration of the slot:')
-	date = forms.DateField(help_text='Please enter the date of the event:')
-	description = forms.CharField(max_length=5000,help_text='Please enter a description for the event:')
-	band = forms.CharField(max_length=50,help_text='Please enter the headline band for the event:')
-	
+	title = forms.CharField(max_length=50)
+	start_time = forms.TimeField()
+	duration = forms.TimeField()
+	date = forms.DateField()
+	description = forms.CharField(max_length=5000)
+	band = forms.CharField(max_length=50)
         class Meta:
-                # associate the model, Category, with the ModelForm
                 model = Advert
 		fields = ('title','start_time','duration','date','description','band')
 
 class UserProfile(models.Model):
         # This field is required.
-        user = models.OneToOneField(Promoter)
+        user = models.OneToOneField(User)
         # These fields are optional
         website = models.URLField(blank=True)
-        picture = models.ImageField(upload_to='imgs', blank=True)
+        #picture = models.ImageField(upload_to='imgs', blank=True)
 
         def __unicode__(self):
                 return self.user.username
 
-class UserForm(forms.ModelForm):
+class PromoterForm(forms.ModelForm):
         class Meta:
-                model = User
-                fields = ["username", "emailaddress", "password"]
+                model = Promoter
+                fields = ["username", "email", "password","name","phone_num"]
 
 class UserProfileForm(forms.ModelForm):
-       class Meta:
-              model = UserProfile
-	      fields = ['website','picture']
+        class Meta:
+                model = UserProfile
+

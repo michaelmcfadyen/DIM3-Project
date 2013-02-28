@@ -1,9 +1,9 @@
 from django.contrib import admin
-from bfb_app.models import Artist,Venue,Genre,Promoter,Advert
+from bfb_app.models import Artist,Venue,Genre,Promoter,Advert,UserProfile
 
 admin.site.register(Artist)
 admin.site.register(Venue)
 admin.site.register(Genre)
 admin.site.register(Promoter)
 admin.site.register(Advert)
-#admin.site.register(UserProfile)
+admin.site.register(UserProfile)
