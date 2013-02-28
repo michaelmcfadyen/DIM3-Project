@@ -16,8 +16,8 @@ class Artist(User):
 	name = models.CharField(max_length=50)
 	phone_number = models.CharField(max_length=20)
 	description = models.CharField(max_length=2000)
-	website = models.URLField()
-	music = models.URLField()
+	website = models.URLField(blank=True)
+	music = models.URLField(blank=True)
 
 	def _unicode_(self):
 		return self.name
@@ -85,6 +85,10 @@ class PromoterForm(forms.ModelForm):
         class Meta:
                 model = Promoter
                 fields = ["username", "email", "password","name","phone_num"]
+class ArtistForm(forms.ModelForm):
+	class Meta:
+		model = Artist
+		fields = ["username","email","password","name","phone_number","description","website","music"]
 
 class UserProfileForm(forms.ModelForm):
         class Meta:
