@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
-from bfb_app.models import PromoterForm, UserProfileForm, ArtistForm
+from bfb_app.models import PromoterForm, UserProfileForm, ArtistForm,Promoter
 from bfb_app.models import Advert,AdvertForm
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django import forms
 
 def base(request):
 	template = loader.get_template('bfb_app/base.html')
@@ -19,6 +20,14 @@ def register(request):
 	template = loader.get_template('bfb_app/register.html')
 	context = RequestContext(request,{}) 
 	return HttpResponse(template.render(context))
+
+def promoterHome(request):
+	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		ad_list = Promoter.objects.filter(username=request.user.username)
+		template = loader.get_template('bfb_app/promoterHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
+
 
 def index(request):
         # select the appropriate template to use
@@ -65,33 +74,33 @@ def registerPromoter(request):
         registered = False
         if request.method == 'POST':
                 uform = PromoterForm(data = request.POST)
-                pform = UserProfileForm(data = request.POST)
-                if uform.is_valid() and pform.is_valid():
+                #pform = UserProfileForm(data = request.POST)
+                if uform.is_valid():
                         user = uform.save()
                         # form brings back a plain text string, not an encrypted password
                         pw = user.password
                         # thus we need to use set password to encrypt the password string
                         user.set_password(pw)
                         user.save()
-                        profile = pform.save(commit = False)
-                        profile.user = user
-                        profile.save()
+                        #profile = pform.save(commit = False)
+                        #profile.user = user
+                        #profile.save()
                         #save_file(request.FILES['picture'])
                         registered = True
                 else:
-                        print uform.errors, pform.errors
+                        print uform.errors
         else:
                 uform = PromoterForm()
-                pform = UserProfileForm()
+               # pform = UserProfileForm()
 
-        return render_to_response('bfb_app/registerpromoter.html', {'uform': uform, 'pform': pform, 'registered': registered }, context)
+        return render_to_response('bfb_app/registerpromoter.html', {'uform': uform, 'registered': registered }, context)
 
 def registerArtist(request):
         context = RequestContext(request)
         registered = False
         if request.method == 'POST':
                 uform = ArtistForm(data = request.POST)
-                pform = UserProfileForm(data = request.POST)
+               # pform = UserProfileForm(data = request.POST)
                 if uform.is_valid() and pform.is_valid():
                         user = uform.save()
                         # form brings back a plain text string, not an encrypted password
@@ -99,37 +108,42 @@ def registerArtist(request):
                         # thus we need to use set password to encrypt the password string
                         user.set_password(pw)
                         user.save()
-                        profile = pform.save(commit = False)
-                        profile.user = user
-                        profile.save()
+                        #profile = pform.save(commit = False)
+                        #profile.user = user
+                        #profile.save()
                         #save_file(request.FILES['picture'])
                         registered = True
                 else:
-                        print uform.errors, pform.errors
+			print "Form is wrong"
+                        print uform.errors
         else:
                 uform = ArtistForm()
-                pform = UserProfileForm()
+               # pform = UserProfileForm()
 
-        return render_to_response('bfb_app/registerartist.html', {'uform': uform, 'pform': pform, 'registered': registered }, context)
+        return render_to_response('bfb_app/registerartist.html', {'uform': uform, 'registered': registered }, context)
 
 
 def user_login(request):
     context = RequestContext(request)
     if request.method == 'POST':
-          username = request.POST['username']
+          uname = request.POST['username']
           password = request.POST['password']
-          user = authenticate(username=username, password=password)
+          user = authenticate(username=uname, password=password)
           if user is not None:
               if user.is_active:
                   login(request, user)
                   # Redirect to index page.
+		  if(Promoter.objects.filter(username=uname).count() > 0):
+			return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/PromoterHome")
+		  else:
+			return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/ArtistHome")
                   return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/")
               else:
                   # Return a 'disabled account' error message
                   return HttpResponse("You're account is disabled.")
           else:
               # Return an 'invalid login' error message.
-              print  "invalid login details " + username + " " + password
+              print  "invalid login details " + uname + " " + password
               return render_to_response('bfb_app/login.html', {}, context)
     else:
         # the login is a  GET request, so just show the user the login form.

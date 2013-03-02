@@ -1,0 +1,13 @@
+{% extends 'bfb_app/base.html' %}
+{% block content %}
+{% if ad_list %}
+        <UL>
+        {% for ad in ad_list %}
+                <LI>{{ad.title}} - {{ad.band}} - {{ad.description}}</LI>
+        {% endfor %}
+        </UL>
+{% else %}
+        <P>No Adverts at present.</P>
+
+
+{% endblock%}
