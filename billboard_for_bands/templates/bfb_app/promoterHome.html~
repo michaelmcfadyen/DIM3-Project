@@ -9,5 +9,5 @@
 {% else %}
         <P>No Adverts at present.</P>
 
-
+{%endif %}
 {% endblock%}

@@ -2,17 +2,34 @@
 {% block content %}
 Welcome to Billboard For Bands... Your Welcome
 <IMG SRC="{{ STATIC_URL }}imgs/billboard_logo.jpg" />
-<a href="http://127.0.0.1:8000/bfb_app/about"> About</a>
 {% if ad_list %}
         <UL>
         {% for ad in ad_list %}
-                <LI>{{ad.title}} - {{ad.band}}{{ad.description}}</LI>
+                <LI>{{ad.title}} - {{ad.band}} - {{ad.description}}</LI>
         {% endfor %}
         </UL>
 {% else %}
         <P>No Adverts at present.</P>
 {% endif %}
-<a href="/bfb_app/register/">Register Here</a>
+<P>
 <a href="/bfb_app/adv_add/">Add Advertisement</a>
+</P>
 {% endblock %}
+{% block sidebar %}
+<FORM id="search_form" method="post" action="/rango/search/">
+        {% csrf_token %}
+        Search:
+        <INPUT type="text" size="50" name="query" value="" id="query">
+        <INPUT type="submit" name="submit" value="submit" />
+</FORM>
+
+{% if result_list %}
+        {% for result in result_list %}
+                <P><A HREF="{{result.link}}">{{result.title}} </A> <BR/>
+                        {{result.summary}}
+                </P>
+        {% endfor %}
+
+{% endif %}
+{% endblock%}
 

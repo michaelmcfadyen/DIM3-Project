@@ -12,17 +12,32 @@ from django import forms
 #	class Meta:
 #		abstract=True;
 
+class Genre(models.Model):
+	genre = models.CharField(max_length=20)
+
+	def __unicode__(self):
+		return self.genre
+
 class Artist(User):
+	genre = models.ForeignKey(Genre)
 	name = models.CharField(max_length=50)
 	phone_number = models.CharField(max_length=20)
 	description = models.CharField(max_length=2000)
 	website = models.URLField(blank=True)
 	music = models.URLField(blank=True)
 
-	def _unicode_(self):
+	def __unicode__(self):
 		return self.name
+class Promoter(User):
+	name = models.CharField(max_length=50)
+	phone_num = models.CharField(max_length=20)
+
+	def __unicode__(self):
+             return self.name
 
 class Advert(models.Model):
+	genre = models.ForeignKey(Genre)
+	promoter=models.ForeignKey(Promoter,null=True,blank=True)
 	artist= models.ManyToManyField(Artist,blank=True)
 	title = models.CharField(max_length = 50)
 	start_time = models.TimeField()
@@ -34,31 +49,14 @@ class Advert(models.Model):
 	def __unicode__(self):
              return self.title
 
-class Genre(models.Model):
-	artist = models.ManyToManyField(Artist)
-	advert = models.ManyToManyField(Advert)
-	genre = models.CharField(max_length=20)
-
-	def _unicode_(self):
-		return self.genre
-
-
 class Venue(models.Model):
-	advert = models.ForeignKey(Advert,blank=True)
+	advert = models.ForeignKey(Advert,blank=True,null=True)
 	name = models.CharField(max_length=100)	
 	address = models.CharField(max_length=500)
 	website = models.URLField()
 
-	def _unicode_(self):
-		return self.name
-
-class Promoter(User):
-	advert = models.ForeignKey(Advert,null=True,blank=True)
-	name = models.CharField(max_length=50)
-	phone_num = models.CharField(max_length=20)
-
 	def __unicode__(self):
-             return self.name
+		return self.name
 
 class AdvertForm(forms.ModelForm):
 	title = forms.CharField(max_length=50)
@@ -69,7 +67,7 @@ class AdvertForm(forms.ModelForm):
 	band = forms.CharField(max_length=50)
         class Meta:
                 model = Advert
-		fields = ('title','start_time','duration','date','description','band')
+		fields = ('title','start_time','duration','date','description','band', "genre")
 
 class UserProfile(models.Model):
         # This field is required.
@@ -88,7 +86,7 @@ class PromoterForm(forms.ModelForm):
 class ArtistForm(forms.ModelForm):
 	class Meta:
 		model = Artist
-		fields = ["username","email","password","name","phone_number","description","website","music"]
+		fields = ["username","email","password","name","phone_number","description","website","music","genre"]
 
 class UserProfileForm(forms.ModelForm):
         class Meta:

@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
-from bfb_app.models import PromoterForm, UserProfileForm, ArtistForm,Promoter
+from bfb_app.models import PromoterForm, UserProfileForm, ArtistForm,Promoter, Artist
 from bfb_app.models import Advert,AdvertForm
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -22,12 +22,24 @@ def register(request):
 	return HttpResponse(template.render(context))
 
 def promoterHome(request):
-	if(Promoter.objects.filter(username=request.user.username).count() > 0 && request.user.is_authenticated()):
-		ad_list = Promoter.objects.filter(username=request.user.username)
+	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username))
 		template = loader.get_template('bfb_app/promoterHome.html')
 		context = RequestContext(request,{'ad_list':ad_list}) 
 		return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('bfb_app/restrictedAccess.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
 
+def artistHome(request):
+	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		template = loader.get_template('bfb_app/artistHome.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
+	template = loader.get_template('bfb_app/index.html')
+	context =  RequestedContext(request,{})
+	return HttpResponse(template.render(context))
 
 def index(request):
         # select the appropriate template to use
@@ -54,9 +66,13 @@ def add_advert(request):
                 if form.is_valid():
                         # the form has been correctly filled in,
                         # so lets save the data to the model
-                        ad = form.save(commit=True)
+                        ad = form.save(commit=False)
+
+			ad.promoter = Promoter.objects.filter(username=request.user.username)[0]
+			
+			ad.save()
                         # show the index page with the list of categories
-                        return index(request)
+                        return promoterHome(request)
                 else:
                         # the form contains errors,
                         # show the form again, with error messages
@@ -101,7 +117,7 @@ def registerArtist(request):
         if request.method == 'POST':
                 uform = ArtistForm(data = request.POST)
                # pform = UserProfileForm(data = request.POST)
-                if uform.is_valid() and pform.is_valid():
+                if uform.is_valid():
                         user = uform.save()
                         # form brings back a plain text string, not an encrypted password
                         pw = user.password
@@ -136,6 +152,7 @@ def user_login(request):
 		  if(Promoter.objects.filter(username=uname).count() > 0):
 			return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/PromoterHome")
 		  else:
+			print "artist"
 			return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/ArtistHome")
                   return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/")
               else:

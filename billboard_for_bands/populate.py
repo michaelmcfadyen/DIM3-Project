@@ -1,7 +1,6 @@
 from bfb_app.models import Genre
 
-g = Genre(genre='Alternative Music')
-g.save()
+g = Genre(genre='Alternative Music').save()
 
 g = Genre(genre='Blues')
 g.save()
@@ -42,8 +41,6 @@ g.save()
 g = Genre(genre='Latin Music')
 g.save()
 
-g = Genre(genre='')
-g.save()
 
 g = Genre(genre='New Age')
 g.save()
