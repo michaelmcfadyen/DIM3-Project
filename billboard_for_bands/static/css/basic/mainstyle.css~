@@ -1,0 +1,25 @@
+body {
+background-image:url("subtle_carbon.png");
+}
+#mainHeader {
+text-align: center;
+	margin: 100px auto; /* was 200 */
+	font-family: "League-Gothic", Courier;
+	font-size: 75px; text-transform: uppercase;
+	color: #fff;
+	text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
+}
+
+#form-login{
+        width: 440px;
+   height:25px;
+        color: #ff0;
+        border-radius: 0px 0px 15px 15px;
+   margin: 0px auto;
+   padding: 5px 5px 5px 10px ;
+        position:fixed;/* You can also use position: absolute; */
+        top:0px;
+        left:900px;
+        background: #000 
+        
+}
