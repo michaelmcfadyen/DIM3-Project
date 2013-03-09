@@ -1,6 +1,9 @@
 {% extends 'bfb_app/base.html' %}
 {% block content %}
 Welcome to Billboard For Bands... Your Welcome
+
+
+
 <IMG SRC="{{ STATIC_URL }}imgs/billboard_logo.jpg" />
 {% if ad_list %}
         <UL>
@@ -13,12 +16,7 @@ Welcome to Billboard For Bands... Your Welcome
 {% endif %}
 {% endblock %}
 {% block sidebar %}
-<FORM id="search_form" method="post" action="/rango/search/">
-        {% csrf_token %}
-        Search:
-        <INPUT type="text" size="50" name="query" value="" id="query">
-        <INPUT type="submit" name="submit" value="submit" />
-</FORM>
+
 
 {% if result_list %}
         {% for result in result_list %}

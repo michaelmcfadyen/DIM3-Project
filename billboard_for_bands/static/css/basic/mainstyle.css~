@@ -10,16 +10,88 @@ text-align: center;
 	text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
 }
 
-#form-login{
+#login_form{
         width: 440px;
    height:25px;
         color: #ff0;
         border-radius: 0px 0px 15px 15px;
    margin: 0px auto;
    padding: 5px 5px 5px 10px ;
-        position:fixed;/* You can also use position: absolute; */
-        top:0px;
-        left:900px;
-        background: #000 
+        position:center;/* You can also use position: absolute; */
+        left:150px;
         
+        
+}
+
+#showloginbutton{
+	position:fixed;
+	top:5px;
+	left:1125px;
+
+}
+
+#registerbutton{
+	position:fixed;
+	top:5px;
+	left:1190px;
+}
+
+
+#search_form{
+	position:fixed;
+	top:190px;
+	left:950px
+}
+
+
+
+#navbar ul {
+list-style-type:none;
+width:auto;
+position:relative;
+display:block;
+height:33px;
+font-size:.6em;
+background:url(menu_assets/images/bg.png) repeat-x top left;
+font-family:Verdana,Helvetica,Arial,sans-serif;
+border:1px solid #000;
+margin:0;
+padding:0;
+top:-100px;
+}
+
+#navbar li {
+display:block;
+float:left;
+margin:0;
+padding:0;
+}
+
+#navbar li a {
+float:left;
+color:#A79787;
+text-decoration:none;
+height:24px;
+padding:9px 15px 0;
+font-weight:normal;
+}
+
+#navbar li a:hover,
+#navbar .active {
+color:#fff;
+background:url(menu_assets/images/bg.png) repeat-x top left;
+text-decoration:none;
+}
+
+#navbar .active a {
+color:#fff;
+font-weight:700;
+}
+
+#navbar ul{
+background-color:#DC4900;
+}
+#navbar li a:hover, 
+#navbar li.active {
+background-color:#F46D00;
 }

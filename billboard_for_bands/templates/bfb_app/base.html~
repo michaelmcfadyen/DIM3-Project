@@ -2,24 +2,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <HTML xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+	
+
 <HEADER>
+	<!--Link to css that defines layout for everypage-->
+	<LINK href="{{ STATIC_URL}}css/basic/mainstyle.css" rel="stylesheet" title="basicstyle" type="text/css" />
+
         <META http-equiv="Content-type" content="text/html; charset=utf-8" />
     <TITLE>Billboard for Bands</TITLE>
 </HEADER>
 <BODY>
-
+	
         <DIV>
                 <DIV id="page_header">
-                        <H1><A href="/">Welcome to Billboard For Bands</A></H1>
+                        <H1 id="mainHeader">Billboard For Bands</A></H1> <!-- removed <A href="http://127.0.0.1:8000/bfb_app/"> -->
                         <DIV id="page_user">
-                                {% if user.is_authenticated %}
-                                        Welcome {{ user.username }} |
-                                        <A href="/bfb_app/">Logout</A>
-                                {% else %}
-                                        <A href="/bfb_app/register">Register</A> 
-                                {% endif %}
+                        <P>
+        			{% if user.is_authenticated %}
+                			Welcome {{ user.username }}  |
+                			<A href="/bfb_app/restricted/">Restricted Page</A> |
+                			<A href="/bfb_app/logout/">Logout</A>
+        			{% else %}
+                			<A href="/bfb_app/register/"><button type ="button" id ="registerbutton">Register</button></A> |
+                			<A href="/bfb_app/login/"><button type ="button" id ="showloginbutton" on click =" this.style.visibility= 'hidden';">Login</button></A>
+        			{% endif %}
+			</P>
                         </DIV>
+			<!--just testing 
+		<div id="form-login" >
+			<form action="/login.forum" method="post"> 
+			<label for="username">Username:</label> <input type="text" name="username" size="10" maxlength="15" /> <label for="password">Password:  </label><input type="password" name="password" size="10" maxlength="15" />  <input type="checkbox" name="autologin" checked="true" /> <input type="submit" class="mainoption" name="login" value="Log in" /><input name="redirect" type="hidden" value=""></form>
+		</div>
                 </DIV>
+		-->
+
+
+
+	<div id='navbar'>
+	<ul>
+   	<li class='active '><a href='#'><span>Home</span></a></li>
+   	<li><a href='#'><span>Products</span></a></li>
+   	<li><a href='#'><span>Company</span></a></li>
+   	<li><a href='#'><span>Contact</span></a></li>
+	</ul>
+	</div>
+	<div style="clear:both; margin: 0 0 30px 0;">&nbsp;</div>
+
 
                 <DIV id="page_navbar">
                         <A href="/bfb_app/">Home</A> |
@@ -39,5 +68,17 @@
                 </DIV>
 
         <DIV>
+
+
+
+<FORM id="search_form" method="post" action="/rango/search/">
+        {% csrf_token %}
+        Search:
+        <INPUT type="text" size="20" name="query" value="" id="query">
+        <INPUT type="submit" name="submit" value="Search" />
+</FORM>
+
+
+
 </BODY>
 </HTML>
