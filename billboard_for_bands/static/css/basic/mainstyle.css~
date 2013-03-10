@@ -18,7 +18,7 @@ text-align: center;
    margin: 0px auto;
    padding: 5px 5px 5px 10px ;
         position:center;/* You can also use position: absolute; */
-        left:150px;
+       
         
         
 }
@@ -36,6 +36,11 @@ text-align: center;
 	left:1190px;
 }
 
+#registerDropdown{
+	position:fixed;
+	top:45px;
+	left:1190px;
+}
 
 #search_form{
 	position:fixed;

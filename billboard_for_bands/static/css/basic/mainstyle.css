@@ -36,6 +36,11 @@ text-align: center;
 	left:1190px;
 }
 
+#registerDropdown{
+	position:fixed;
+	top:35px;
+	left:1190px;
+}
 
 #search_form{
 	position:fixed;

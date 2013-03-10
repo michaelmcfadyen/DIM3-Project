@@ -1,10 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Billboards for Bands.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+
 {% extends 'bfb_app/base.html' %}
 {% block content %}
 <FONT COLOR="white">Welcome to Billboard For Bands... Your Welcome</FONT>
-
-
-
-<IMG SRC="{{ STATIC_URL }}imgs/billboard_logo.jpg" />
 {% if ad_list %}
         <UL>
         {% for ad in ad_list %}
@@ -30,3 +38,4 @@
 {% block footer %}
 <FONT COLOR="white">About - This is where we tell you about it app. Yes, its awesome</FONT>
 {% endblock%}
+</html>
