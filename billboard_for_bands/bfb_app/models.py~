@@ -54,6 +54,11 @@ class Advert(models.Model):
 	date = models.DateField()
 	description = models.CharField(max_length=5000)
 	band = models.CharField(max_length=50)
+	OPEN = 'OP'
+	CLOSED = 'CL'
+	CHOSEN = 'CH'
+	status_choices = ((OPEN,'open'), (CLOSED,'closed'), (CHOSEN, 'chosen'),)
+	status = models.CharField(max_length = 50)
 
 	def __unicode__(self):
              return self.title
@@ -67,7 +72,7 @@ class AdvertForm(forms.ModelForm):
 	band = forms.CharField(max_length=50)
         class Meta:
                 model = Advert
-		fields = ('title','start_time','duration','date','description','band', "genre")
+		fields = ('title','start_time','duration','date','description','band', "genre", "venue")
 
 class UserProfile(models.Model):
         # This field is required.

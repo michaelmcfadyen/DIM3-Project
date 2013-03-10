@@ -54,6 +54,11 @@ class Advert(models.Model):
 	date = models.DateField()
 	description = models.CharField(max_length=5000)
 	band = models.CharField(max_length=50)
+	OPEN = 'OP'
+	CLOSED = 'CL'
+	CHOSEN = 'CH'
+	status_choices = ((OPEN,'open'), (CLOSED,'closed'), (CHOSEN, 'chosen'),)
+	status = models.CharField(max_length = 2, choices=status_choices,default=OPEN)
 
 	def __unicode__(self):
              return self.title

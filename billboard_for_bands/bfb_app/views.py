@@ -21,6 +21,31 @@ def register(request):
 	context = RequestContext(request,{}) 
 	return HttpResponse(template.render(context))
 
+def artistProfile(request):
+	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		profile = Artist.objects.filter(username=request.user.username)
+		print profile
+		template = loader.get_template('bfb_app/artistProfile.html')
+		context = RequestContext(request,{profile})
+		return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('bfb_app/index.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
+		
+
+def promoterProfile(request):
+	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		profile = Promoter.objects.filter(username=request.user.username)
+		print profile
+		template = loader.get_template('bfb_app/promoterProfile.html')
+		context = RequestContext(request,{profile})
+		return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('bfb_app/index.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
+
 def promoterHome(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username))
@@ -78,7 +103,7 @@ def add_advert(request):
                 	        ad = form.save(commit=False)
 	
 				ad.promoter = Promoter.objects.filter(username=request.user.username)[0]
-			
+				ad.status = 'OP'
 				ad.save()
                 	        # show the index page with the list of categories
                 	        return promoterHome(request)
