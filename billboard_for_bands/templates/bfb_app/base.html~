@@ -50,10 +50,7 @@
 	<div style="clear:both; margin: 0 0 30px 0;">&nbsp;</div>
 
 
-                <DIV id="page_navbar">
-                        <A href="/bfb_app/">Home</A> |
-                        <A href="/bfb_app/about">About</A>
-                </DIV>
+                
 
                 <DIV>
                         {% block sidebar %}{% endblock %}

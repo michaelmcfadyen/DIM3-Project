@@ -1,10 +1,6 @@
 {% extends 'bfb_app/base.html' %}
 {% block content %}
-Welcome to Billboard For Bands... Your Welcome
-
-
-
-<IMG SRC="{{ STATIC_URL }}imgs/billboard_logo.jpg" />
+<FONT COLOR="white">Welcome to Billboard For Bands... Your Welcome</FONT>
 {% if ad_list %}
         <UL>
         {% for ad in ad_list %}
@@ -12,7 +8,7 @@ Welcome to Billboard For Bands... Your Welcome
         {% endfor %}
         </UL>
 {% else %}
-        <P>No Adverts at present.</P>
+        <P><FONT COLOR="white">No Adverts at present.</FONT></P>
 {% endif %}
 {% endblock %}
 {% block sidebar %}
@@ -27,4 +23,6 @@ Welcome to Billboard For Bands... Your Welcome
 
 {% endif %}
 {% endblock%}
-
+{% block footer %}
+<FONT COLOR="white">About - This is where we tell you about it app. Yes, its awesome</FONT>
+{% endblock%}

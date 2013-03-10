@@ -1,6 +1,6 @@
 {% extends 'bfb_app/base.html' %}
 {% block content %}
-Welcome to Billboard For Bands... Your Welcome
+<FONT COLOR="white">Welcome to Billboard For Bands... Your Welcome</FONT>
 
 
 
@@ -12,16 +12,11 @@ Welcome to Billboard For Bands... Your Welcome
         {% endfor %}
         </UL>
 {% else %}
-        <P>No Adverts at present.</P>
+        <P><FONT COLOR="white">No Adverts at present.</FONT></P>
 {% endif %}
 {% endblock %}
 {% block sidebar %}
-<FORM id="search_form" method="post" action="/rango/search/">
-        {% csrf_token %}
-        Search:
-        <INPUT type="text" size="20" name="query" value="" id="query">
-        <INPUT type="submit" name="submit" value="Search" />
-</FORM>
+
 
 {% if result_list %}
         {% for result in result_list %}
@@ -32,4 +27,6 @@ Welcome to Billboard For Bands... Your Welcome
 
 {% endif %}
 {% endblock%}
-
+{% block footer %}
+<FONT COLOR="white">About - This is where we tell you about it app. Yes, its awesome</FONT>
+{% endblock%}

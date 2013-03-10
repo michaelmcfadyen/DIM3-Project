@@ -24,18 +24,23 @@ def register(request):
 def promoterHome(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username))
+		print ad_list
+		count_list = []
+		for x in ad_list:
+			count_list.append(x.artist.count)
 		template = loader.get_template('bfb_app/promoterHome.html')
-		context = RequestContext(request,{'ad_list':ad_list}) 
+		context = RequestContext(request,{'ad_list':ad_list, 'count_list':count_list}) 
 		return HttpResponse(template.render(context))
 	else:
-		template = loader.get_template('bfb_app/restrictedAccess.html')
+		template = loader.get_template('bfb_app/index.html')
 		context = RequestContext(request,{}) 
 		return HttpResponse(template.render(context))
 
 def artistHome(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		ad_list = Advert.objects.all()
 		template = loader.get_template('bfb_app/artistHome.html')
-		context = RequestContext(request,{}) 
+		context = RequestContext(request,{'ad_list':ad_list}) 
 		return HttpResponse(template.render(context))
 	template = loader.get_template('bfb_app/index.html')
 	context =  RequestContext(request,{})
@@ -57,33 +62,40 @@ def about(request):
 	context = RequestContext(request,{})
 	return HttpResponse(template.render(context))
 
+def search(request):
+	contect = RequestContext(request)
+
 def add_advert(request):
-        # immediately get the context - as it may contain posting data
-        context = RequestContext(request)
-        if request.method == 'POST':
-                # data has been entered into the form via Post
-                form = AdvertForm(request.POST)
-                if form.is_valid():
-                        # the form has been correctly filled in,
-                        # so lets save the data to the model
-                        ad = form.save(commit=False)
-
-			ad.promoter = Promoter.objects.filter(username=request.user.username)[0]
+	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+        	# immediately get the context - as it may contain posting data
+        	context = RequestContext(request)
+        	if request.method == 'POST':
+                	# data has been entered into the form via Post
+                	form = AdvertForm(request.POST)
+                	if form.is_valid():
+                	        # the form has been correctly filled in,
+                	        # so lets save the data to the model
+                	        ad = form.save(commit=False)
+	
+				ad.promoter = Promoter.objects.filter(username=request.user.username)[0]
 			
-			ad.save()
-                        # show the index page with the list of categories
-                        return promoterHome(request)
-                else:
-                        # the form contains errors,
-                        # show the form again, with error messages
-                        print form.errors
-        else:
-                # a GET request was made, so we simply show a blank/empty form.
-                form = AdvertForm()
+				ad.save()
+                	        # show the index page with the list of categories
+                	        return promoterHome(request)
+               		else:
+                        	# the form contains errors,
+                        	# show the form again, with error messages
+                        	print form.errors
+        	else:
+                	# a GET request was made, so we simply show a blank/empty form.
+                	form = AdvertForm()
 
-        # pass on the context, and the form data.
-        return render_to_response('bfb_app/add_advert.html',
-                {'form': form }, context)
+       	 	# pass on the context, and the form data.
+        	return render_to_response('bfb_app/add_advert.html', {'form': form }, context)
+	else:
+		template = loader.get_template('bfb_app/index.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
 
 def registerPromoter(request):
         context = RequestContext(request)

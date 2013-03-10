@@ -1,16 +1,27 @@
 {% extends 'bfb_app/base.html' %}
 {% block content %}
 {% if ad_list %}
+<FONT COLOR="white">
         <UL>
         {% for ad in ad_list %}
-                <LI>{{ad.title}} - {{ad.band}} - {{ad.description}}</LI>
+        <LI>{{ad.title}} - {{ad.band}} - {{ad.description}}</LI></A> 
         {% endfor %}
         </UL>
 {% else %}
-        <P>No Adverts at present.</P>
+        	<P>No Adverts at present.</P>
+{%endif %}
+{% if count_list %}
+        <UL>
+        {% for count in count_list %}
+        <LI>{{count}}</LI></A> 
+        {% endfor %}
+        </UL>
+{% else %}
+        <P><FONT COLOR="white">No Applicants at present.</FONT></P>
 
 {%endif %}
 <P>
 <a href="/bfb_app/adv_add/">Add Advertisement</a>
 </P>
+</FONT>
 {% endblock%}

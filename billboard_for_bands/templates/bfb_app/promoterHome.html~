@@ -3,11 +3,23 @@
 {% if ad_list %}
         <UL>
         {% for ad in ad_list %}
-                <LI>{{ad.title}} - {{ad.band}} - {{ad.description}}</LI>
+        <LI>{{ad.title}} - {{ad.band}} - {{ad.description}}</LI></A> 
         {% endfor %}
         </UL>
 {% else %}
-        <P>No Adverts at present.</P>
+        <P><FONT COLOR="white">No Adverts at present.</FONT></P>
+{%endif %}
+{% if count_list %}
+        <UL>
+        {% for count in count_list %}
+        <LI>{{count}}</LI></A> 
+        {% endfor %}
+        </UL>
+{% else %}
+        <P><FONT COLOR="white">No Applicants at present.</FONT></P>
 
 {%endif %}
+<P>
+<a href="/bfb_app/adv_add/">Add Advertisement</a>
+</P>
 {% endblock%}

@@ -1,4 +1,4 @@
-from bfb_app.models import Genre
+from bfb_app.models import Genre,Artist,Venue
 
 g = Genre(genre='Alternative Music').save()
 
@@ -59,8 +59,18 @@ g.save()
 g = Genre(genre='World Music / Beats')
 g.save()
     
-    
-    
+
+venue = Venue(name="Oran Mor", address="Byres Rd  Glasgow G12 8QX",website="http://oran-mor.co.uk/")
+venue.save()
+venue = Venue(name="02 ABC" , address = "300 Sauchiehall St  Glasgow, Lanarkshire G2 3JA",website = "http://www.o2abcglasgow.co.uk/")
+venue.save()
+venue = Venue(name ="Box",address ="431 Sauchiehall St  Glasgow G2 3LG", website="http://boxglasgow.co.uk/")
+venue.save()
+venue = Venue(name="Stereo",address="22-28 Renfield Ln  Glasgow G2 6PH", website="http://www.stereocafebar.com/")
+venue.save()
+venue = Venue(name="Pivo Pivo", address="15 Waterloo St  Glasgow G2 6AY", website="https://plus.google.com/110023145115812766440/about?gl=uk&hl=en")
+venue.save
+
     
     
     

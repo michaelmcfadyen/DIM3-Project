@@ -18,6 +18,14 @@ class Genre(models.Model):
 	def __unicode__(self):
 		return self.genre
 
+class Venue(models.Model):
+	name = models.CharField(max_length=100)	
+	address = models.CharField(max_length=500)
+	website = models.URLField()
+
+	def __unicode__(self):
+		return self.name
+
 class Artist(User):
 	genre = models.ForeignKey(Genre)
 	name = models.CharField(max_length=50)
@@ -38,6 +46,7 @@ class Promoter(User):
 class Advert(models.Model):
 	genre = models.ForeignKey(Genre)
 	promoter=models.ForeignKey(Promoter,null=True,blank=True)
+	venue=models.ForeignKey(Venue)
 	artist= models.ManyToManyField(Artist,blank=True)
 	title = models.CharField(max_length = 50)
 	start_time = models.TimeField()
@@ -49,15 +58,6 @@ class Advert(models.Model):
 	def __unicode__(self):
              return self.title
 
-class Venue(models.Model):
-	advert = models.ForeignKey(Advert,blank=True,null=True)
-	name = models.CharField(max_length=100)	
-	address = models.CharField(max_length=500)
-	website = models.URLField()
-
-	def __unicode__(self):
-		return self.name
-
 class AdvertForm(forms.ModelForm):
 	title = forms.CharField(max_length=50)
 	start_time = forms.TimeField()
@@ -67,7 +67,7 @@ class AdvertForm(forms.ModelForm):
 	band = forms.CharField(max_length=50)
         class Meta:
                 model = Advert
-		fields = ('title','start_time','duration','date','description','band', "genre")
+		fields = ('title','start_time','duration','date','description','band', "genre", "venue")
 
 class UserProfile(models.Model):
         # This field is required.
