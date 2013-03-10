@@ -95,3 +95,45 @@ background-color:#DC4900;
 #navbar li.active {
 background-color:#F46D00;
 }
+
+/*for buttons */
+.button {
+   border-top: 1px solid #a8464f;
+   background: #d1bcc8;
+   background: -webkit-gradient(linear, left top, left bottom, from(#e65c12), to(#d1bcc8));
+   background: -webkit-linear-gradient(top, #e65c12, #d1bcc8);
+   background: -moz-linear-gradient(top, #e65c12, #d1bcc8);
+   background: -ms-linear-gradient(top, #e65c12, #d1bcc8);
+   background: -o-linear-gradient(top, #e65c12, #d1bcc8);
+   padding: 7px 14px;
+   -webkit-border-radius: 21px;
+   -moz-border-radius: 21px;
+   border-radius: 21px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: #fff5ff;
+   font-size: 18px;
+   font-family: Georgia, Serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+.button:hover {
+   border-top-color: #871818;
+   background: #871818;
+   color: #cccccc;
+   }
+.button:active {
+   border-top-color: #1b285c;
+   background: #1b285c;
+   }
+
+#selectRegisterTable{
+	
+	position:absolute;
+	left:400px;
+	top:500px;
+
+}
+

@@ -18,7 +18,7 @@ text-align: center;
    margin: 0px auto;
    padding: 5px 5px 5px 10px ;
         position:center;/* You can also use position: absolute; */
-        left:150px;
+       
         
         
 }
