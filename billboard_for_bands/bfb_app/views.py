@@ -88,12 +88,12 @@ def artistHome(request):
 	if request.method == 'GET':
 		if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 			ad_list = Advert.objects.all()
+			count_list = []
+			for ad in ad_list:
+				count_list.append(ad.artist.count)
 			template = loader.get_template('bfb_app/artistHome.html')
-			context = RequestContext(request,{'ad_list':ad_list}) 
+			context = RequestContext(request,{'ad_list':ad_list,'count_list':count_list}) 
 			return HttpResponse(template.render(context))
-		template = loader.get_template('bfb_app/index.html')
-		context =  RequestContext(request,{})
-		return HttpResponse(template.render(context))
 	elif request.method == 'POST' and request.user.is_authenticated():
 		advert_title = request.POST['']
 		date = request.POST['']
