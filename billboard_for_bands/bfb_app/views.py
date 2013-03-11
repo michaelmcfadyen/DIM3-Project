@@ -135,7 +135,10 @@ def index(request):
         # but later on we will be putting data in the context which the template engine
         # will use when it renders the template into a page.
 	ad_list = Advert.objects.all()
-        context = RequestContext(request, {'ad_list':ad_list})
+	count_list = []
+	for x in ad_list:
+		count_list.append(x.artist.count)
+        context = RequestContext(request, {'ad_list':ad_list,'count_list':count_list})
         # render the template using the provided context and return as http response.
         return HttpResponse(template.render(context))
 

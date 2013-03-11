@@ -26,7 +26,7 @@ def anon_browse(request):
 		ad_list = Advert.objects.all()
 		template = loader.get_template('bfb_app/browse')
 		context = RequestContext(request, {'ad_list':ad_list})
-		return HttpResponse(template.render(context)
+		return HttpResponse(template.render(context))
 
 def advertProfile(request):
 	context = RequestContext(request)
@@ -135,6 +135,9 @@ def index(request):
         # but later on we will be putting data in the context which the template engine
         # will use when it renders the template into a page.
 	ad_list = Advert.objects.all()
+	count_list = []
+	for x in ad_list:
+		count_list.append(x.artist.count)
         context = RequestContext(request, {'ad_list':ad_list})
         # render the template using the provided context and return as http response.
         return HttpResponse(template.render(context))
@@ -243,7 +246,7 @@ def user_login(request):
                   login(request, user)
                   # Redirect to index page.
 		  if(Promoter.objects.filter(username=uname).count() > 0):
-			return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/PromoterHome")
+			return HttpResponseRedirect("/bfb_app/PromoterHome")
 		  elif Artist.objects.filter(username=uname).count() > 0:
 			print "artist"
 			return HttpResponseRedirect("/bfb_app/ArtistHome")
