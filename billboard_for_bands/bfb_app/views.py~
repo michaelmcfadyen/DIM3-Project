@@ -21,6 +21,23 @@ def register(request):
 	context = RequestContext(request,{}) 
 	return HttpResponse(template.render(context))
 
+def anon_browse(request):
+	if(request.user.is_authenticated() == False):
+		ad_list = Advert.objects.all()
+		template = loader.get_template('bfb_app/browse')
+		context = RequestContext(request, {'ad_list':ad_list})
+		return HttpResponse(template.render(context)
+
+def advertProfile(request):
+	context = RequestContext(request)
+	if request.method == 'POST'and request.user.is_authenticated():
+		advert_title = request.POST['']
+		advert = Advert.object.filter(title=advert_title)[0]
+		if(advert.count == 1):
+			template = loader.get_template('bfb_app/advertProfile')
+			context = RequestContext(request,{'advert' : advert})
+			return HttpResponse(template.render(context))
+
 def artistProfile(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		profile = Artist.objects.filter(username=request.user.username)
@@ -36,7 +53,7 @@ def artistProfile(request):
 
 def promoterProfile(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		profile = Promoter.objects.filter(username=request.user.username)
+		profile = Promoter.objects.filter(username=request.user.username)[0]
 		print profile
 		template = loader.get_template('bfb_app/promoterProfile.html')
 		context = RequestContext(request,{profile})
@@ -56,20 +73,60 @@ def promoterHome(request):
 		template = loader.get_template('bfb_app/promoterHome.html')
 		context = RequestContext(request,{'ad_list':ad_list, 'count_list':count_list}) 
 		return HttpResponse(template.render(context))
+	elif Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():
+		template = loader.get_template('bfb_app/artistHome.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('bfb_app/index.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
+			
+
+def artistHome(request):
+	context = RequestContext(request)
+	if request.method == 'GET':
+		if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+			ad_list = Advert.objects.all()
+			template = loader.get_template('bfb_app/artistHome.html')
+			context = RequestContext(request,{'ad_list':ad_list}) 
+			return HttpResponse(template.render(context))
+		template = loader.get_template('bfb_app/index.html')
+		context =  RequestContext(request,{})
+		return HttpResponse(template.render(context))
+	elif request.method == 'POST' and request.user.is_authenticated():
+		advert_title = request.POST['']
+		date = request.POST['']
+		advert = Advert.objects.filter(title=advert_title)
+		if(advert.count > 0):
+			for ad in advert:
+				ad.artist = Artist.filter.object(username=request.user.username);
+		else:
+			print 'advert does not exist'
+			return render_to_response('bfb_app/artistHome.html',{},context)
+	elif Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():	
+		template = loader.get_template('bfb_app/promoterHome.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
 	else:
 		template = loader.get_template('bfb_app/index.html')
 		context = RequestContext(request,{}) 
 		return HttpResponse(template.render(context))
 
-def artistHome(request):
-	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		ad_list = Advert.objects.all()
-		template = loader.get_template('bfb_app/artistHome.html')
-		context = RequestContext(request,{'ad_list':ad_list}) 
-		return HttpResponse(template.render(context))
-	template = loader.get_template('bfb_app/index.html')
-	context =  RequestContext(request,{})
-	return HttpResponse(template.render(context))
+#def artist_applies(request):
+##	
+#	if (request.method == 'POST' and request.user.is_authenticated()):
+#		advert_title = request.POST['']
+#		date = request.POST['']
+#		advert = Advert.objects.filter(title=advert_title and date=d and status=OPEN)
+#		if(advert.count > 0):
+#			for ad in advert:
+#				ad.artist = request.user.username;
+#		else:
+#			print 'advert does not exist'
+#			return render_to_response('',{},context)
+#	else:
+#		return render_to_response('',{},context)
 
 def index(request):
         # select the appropriate template to use
@@ -88,7 +145,7 @@ def about(request):
 	return HttpResponse(template.render(context))
 
 def search(request):
-	contect = RequestContext(request)
+	context = RequestContext(request)
 
 def add_advert(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -103,7 +160,7 @@ def add_advert(request):
                 	        ad = form.save(commit=False)
 	
 				ad.promoter = Promoter.objects.filter(username=request.user.username)[0]
-				ad.status = OPEN
+				ad.status = 'OP'
 				ad.save()
                 	        # show the index page with the list of categories
                 	        return promoterHome(request)
@@ -175,7 +232,6 @@ def registerArtist(request):
 
         return render_to_response('bfb_app/registerartist.html', {'uform': uform, 'registered': registered }, context)
 
-
 def user_login(request):
     context = RequestContext(request)
     if request.method == 'POST':
@@ -188,9 +244,11 @@ def user_login(request):
                   # Redirect to index page.
 		  if(Promoter.objects.filter(username=uname).count() > 0):
 			return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/PromoterHome")
-		  else:
+		  elif Artist.objects.filter(username=uname).count() > 0:
 			print "artist"
 			return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/ArtistHome")
+		  else:
+			return HttpResponseRedirect('bfb_app/index.html')
                   return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/")
               else:
                   # Return a 'disabled account' error message

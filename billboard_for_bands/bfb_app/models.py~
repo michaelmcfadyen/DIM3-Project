@@ -4,13 +4,6 @@ from django.forms import ModelForm
 from django import forms
 
 # Create your models here.
-#class User(models.Model):
-#	username = models.CharField(max_length=100)
-#	password = models.CharField(max_length=20)
-#	emailaddress = models.CharField(max_length=100)
-#	
-#	class Meta:
-#		abstract=True;
 
 class Genre(models.Model):
 	genre = models.CharField(max_length=20)
@@ -43,6 +36,7 @@ class Promoter(User):
 	def __unicode__(self):
              return self.name
 
+MY_DATE_FORMATS = ['%d/%m/%Y',]
 class Advert(models.Model):
 	genre = models.ForeignKey(Genre)
 	promoter=models.ForeignKey(Promoter,null=True,blank=True)
@@ -51,14 +45,14 @@ class Advert(models.Model):
 	title = models.CharField(max_length = 50)
 	start_time = models.TimeField()
 	duration = models.TimeField()
-	date = models.DateField()
+	date = models.DateField(input_formats=MY_DATE_FORMATS)
 	description = models.CharField(max_length=5000)
 	band = models.CharField(max_length=50)
 	OPEN = 'OP'
 	CLOSED = 'CL'
 	CHOSEN = 'CH'
 	status_choices = ((OPEN,'open'), (CLOSED,'closed'), (CHOSEN, 'chosen'),)
-	status = models.CharField(max_length = 50)
+	status = models.CharField(max_length = 2, choices=status_choices,default=OPEN)
 
 	def __unicode__(self):
              return self.title

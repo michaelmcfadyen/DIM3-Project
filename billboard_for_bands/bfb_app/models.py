@@ -4,13 +4,6 @@ from django.forms import ModelForm
 from django import forms
 
 # Create your models here.
-#class User(models.Model):
-#	username = models.CharField(max_length=100)
-#	password = models.CharField(max_length=20)
-#	emailaddress = models.CharField(max_length=100)
-#	
-#	class Meta:
-#		abstract=True;
 
 class Genre(models.Model):
 	genre = models.CharField(max_length=20)

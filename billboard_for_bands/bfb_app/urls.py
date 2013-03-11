@@ -15,6 +15,8 @@ urlpatterns = patterns('',
 	url(r'^PromoterHome', views.promoterHome, name='Promoter Home'),
 	url(r'^ArtistHome', views.artistHome, name='Artist Home'),
 	url(r'^PromoterProfile',views.promoterProfile, name = 'Promoter Profile'),
-	url(r'^ArtistProfile',views.artistProfile, name = 'Artist Profile')
+	url(r'^ArtistProfile',views.artistProfile, name = 'Artist Profile'),
+	url(r'^AdvertProfile',views.advertProfile, name = 'Advert Profile'),
+	url(r'^browse',views.anon_browse,name = 'Browse')
 
 )
