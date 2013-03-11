@@ -40,7 +40,7 @@ def advertProfile(request):
 
 def artistProfile(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		profile = Artist.objects.filter(username=request.user.username)
+		profile = Artist.objects.filter(username=request.user.username)[0]
 		print profile
 		template = loader.get_template('bfb_app/artistProfile.html')
 		context = RequestContext(request,{profile})
@@ -243,13 +243,13 @@ def user_login(request):
                   login(request, user)
                   # Redirect to index page.
 		  if(Promoter.objects.filter(username=uname).count() > 0):
-			return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/PromoterHome")
+			return HttpResponseRedirect("/bfb_app/PromoterHome")
 		  elif Artist.objects.filter(username=uname).count() > 0:
 			print "artist"
-			return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/ArtistHome")
+			return HttpResponseRedirect("/bfb_app/ArtistHome")
 		  else:
 			return HttpResponseRedirect('bfb_app/index.html')
-                  return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/")
+                  return HttpResponseRedirect("/bfb_app/")
               else:
                   # Return a 'disabled account' error message
                   return HttpResponse("You're account is disabled.")
@@ -266,6 +266,6 @@ def user_logout(request):
     context = RequestContext(request)
     logout(request)
     # Redirect back to index page.
-    return HttpResponseRedirect('http://127.0.0.1:8000/bfb_app/')
+    return HttpResponseRedirect('/bfb_app/')
 
 
