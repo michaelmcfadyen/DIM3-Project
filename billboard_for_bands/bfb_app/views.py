@@ -26,7 +26,7 @@ def anon_browse(request):
 		ad_list = Advert.objects.all()
 		template = loader.get_template('bfb_app/browse')
 		context = RequestContext(request, {'ad_list':ad_list})
-		return HttpResponse(template.render(context)
+		return HttpResponse(template.render(context))
 
 def advertProfile(request):
 	context = RequestContext(request)

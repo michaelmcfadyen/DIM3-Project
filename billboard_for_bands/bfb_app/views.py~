@@ -243,7 +243,7 @@ def user_login(request):
                   login(request, user)
                   # Redirect to index page.
 		  if(Promoter.objects.filter(username=uname).count() > 0):
-			return HttpResponseRedirect("/bfb_app/PromoterHome")
+			return HttpResponseRedirect("http://127.0.0.1:8000/bfb_app/PromoterHome")
 		  elif Artist.objects.filter(username=uname).count() > 0:
 			print "artist"
 			return HttpResponseRedirect("/bfb_app/ArtistHome")
