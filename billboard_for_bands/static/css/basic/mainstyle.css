@@ -1,6 +1,21 @@
-body {
-background-image:url("subtle_carbon.png");
+body, html{
+height: 100%;
 }
+
+body {
+background-image:url("subtle_carbon_75_transparent.png") repeat 0 0;
+}
+
+/* Custom container */
+.container-narrow {
+  background: url("subtle_carbon_75_transparent.png") repeat 0 0;
+  margin: 0 auto;
+  padding: 10px;
+  max-width: 1000px;
+  min-height: 100%;
+}
+
+
 #mainHeader {
 text-align: center;
 	margin: 100px auto; /* was 200 */
@@ -26,25 +41,25 @@ text-align: center;
 #showloginbutton{
 	position:fixed;
 	top:5px;
-	left:1125px;
+	/*left:1125px;*/
 
 }
 
 #registerbutton{
 	position:fixed;
 	top:5px;
-	left:1190px;
+	/*left:1190px;*/
 }
 
-
-#search_form{
+#registerDropdown{
 	position:fixed;
-	top:190px;
-	left:950px
+	top:35px;
+	left:1000px;
 }
 
+.navbar .container { top:100px;}
 
-
+/*
 #navbar ul {
 list-style-type:none;
 width:auto;
@@ -95,45 +110,4 @@ background-color:#DC4900;
 #navbar li.active {
 background-color:#F46D00;
 }
-
-/*for buttons */
-.button {
-   border-top: 1px solid #a8464f;
-   background: #d1bcc8;
-   background: -webkit-gradient(linear, left top, left bottom, from(#e65c12), to(#d1bcc8));
-   background: -webkit-linear-gradient(top, #e65c12, #d1bcc8);
-   background: -moz-linear-gradient(top, #e65c12, #d1bcc8);
-   background: -ms-linear-gradient(top, #e65c12, #d1bcc8);
-   background: -o-linear-gradient(top, #e65c12, #d1bcc8);
-   padding: 7px 14px;
-   -webkit-border-radius: 21px;
-   -moz-border-radius: 21px;
-   border-radius: 21px;
-   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   box-shadow: rgba(0,0,0,1) 0 1px 0;
-   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-   color: #fff5ff;
-   font-size: 18px;
-   font-family: Georgia, Serif;
-   text-decoration: none;
-   vertical-align: middle;
-   }
-.button:hover {
-   border-top-color: #871818;
-   background: #871818;
-   color: #cccccc;
-   }
-.button:active {
-   border-top-color: #1b285c;
-   background: #1b285c;
-   }
-
-#selectRegisterTable{
-	
-	position:absolute;
-	left:400px;
-	top:500px;
-
-}
-
+*/
