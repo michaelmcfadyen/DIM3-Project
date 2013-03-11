@@ -18,11 +18,12 @@ background-image:url("subtle_carbon_75_transparent.png") repeat 0 0;
 
 #mainHeader {
 text-align: center;
-	margin: 100px auto; /* was 200 */
+	margin: 20px auto; /* was 200 */
+	margin-top: 80px;
 	font-family: "League-Gothic", Courier;
 	font-size: 75px; text-transform: uppercase;
 	color: #fff;
-	text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e;
+	text-shadow: 0 0 10px #F8EDFF, 10px -10px 30px #F8EDFF, -20px -20px 40px #F8EDFF, 20px -40px 50px #7F27BA, -20px -50px 60px #7F27BA, 0 -60px 70px #7F27BA, 10px -50px 40px #F8EDFF;
 }
 
 #login_form{
@@ -37,27 +38,27 @@ text-align: center;
         
         
 }
-
+/*
 #showloginbutton{
 	position:fixed;
-	top:5px;
-	/*left:1125px;*/
+	top:165px;
+	left:1125px;
 
 }
 
 #registerbutton{
 	position:fixed;
-	top:5px;
-	/*left:1190px;*/
+	top:165px;
+	left:1190px;
 }
+*/
 
 #registerDropdown{
 	position:fixed;
-	top:35px;
-	left:1000px;
+	top:200px;
+	left:950px;
 }
 
-.navbar .container { height: 1em; top:100px;}
 
 /*
 #navbar ul {

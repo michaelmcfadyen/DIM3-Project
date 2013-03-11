@@ -22,59 +22,35 @@
     <TITLE>Billboard for Bands</TITLE>
 </HEADER>
 <BODY>
-    <div class="container-narrow">
-        <DIV>
-                <DIV id="page_header">
-                        <H1 id="mainHeader">Billboard For Bands</A></H1> <!-- removed <A href="http://127.0.0.1:8000/bfb_app/"> -->
-						<DIV id="page_user">
-                        <P>
+<div class="container-narrow">
+	<div id="page_header">
+    	<H1 id="mainHeader">Billboard For Bands</A></H1> <!-- removed <A href="http://127.0.0.1:8000/bfb_app/"> -->
+	</div>
 						
-        			{% if user.is_authenticated %}
-                			Welcome {{ user.username }}  |
-                			<A href="/bfb_app/restricted/">Restricted Page</A> |
-                			<A href="/bfb_app/logout/">Logout</A>
-        			{% else %}
-							<div class="span4 offset10" id="loginbutton">
-								<ul class="nav nav-pills">
-								<A href="/bfb_app/login/"><button class="btn" type="button" id="showloginbutton" onclick ="this.style.visibility= 'hidden';">Login</button></A>
-								<div class="span2 offset1">
-								<div class="btn-group">
-									<a class="btn dropdown-toggle" data-toggle="dropdown" id="registerbutton" href="#">Register <span class="caret"></span>
-									</a>
-									<ul class="dropdown-menu" id="registerDropdown">
-									<li><A href="/bfb_app/register/artist">Artist</A><li>
-									<li><A href="/bfb_app/register/promoter">Promoter</A><li>
-									</ul>
-								</div>
-								</div>
-							</div>
-							
-
-        			{% endif %}
-						</div>
-                        
-</P>
-						</DIV>
-			<!--just testing 
-		<div id="form-login" >
-			<form action="/login.forum" method="post"> 
-			<label for="username">Username:</label> <input type="text" name="username" size="10" maxlength="15" /> <label for="password">Password:  </label><input type="password" name="password" size="10" maxlength="15" />  <input type="checkbox" name="autologin" checked="true" /> <input type="submit" class="mainoption" name="login" value="Log in" /><input name="redirect" type="hidden" value=""></form>
-		</div>
-                </DIV>
-		-->
-
-
 	<div class="navbar">
-    <div class="navbar-inner" style="-webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; overflow:hidden;">
+    <div class="navbar-inner" style="-webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; overflow:hidden; top=100px;">
     <div class="container">
 	<div class="span12">
 		<ul class="nav">
-        	<li class="active"><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
+        	<li class="active"><a href="/bfb_app/">Home</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
 		<form class="navbar-form pull-right">
 	      	<input type="text" class="search-query span3" id="searchPlease" placeholder="Advert or Venue">
+			{% if user.is_authenticated %}
+			Welcome {{ user.username }}  |
+			<a href="/bfb_app/logout/"> Logout </a>
+			{% else %}
+			<div class="btn-group">
+				<a class="btn dropdown-toggle" data-toggle="dropdown" id="registerbutton" href="#">Register <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" id="registerDropdown">
+					<li><A href="/bfb_app/register/artist">Artist</A><li>
+					<li><A href="/bfb_app/register/promoter">Promoter</A><li>
+				</ul>
+				<A href="/bfb_app/login/"><button class="btn" type="button" id="showloginbutton" onclick ="this.style.visibility= 'hidden';">Login</button></A>
+			</div>
+			{% endif %}
 		</form>
 	</div>
     </div>
