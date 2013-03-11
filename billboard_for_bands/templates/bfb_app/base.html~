@@ -18,11 +18,11 @@
 	<!--Link to css that defines layout for everypage-->
 	<LINK href="{{ STATIC_URL}}css/basic/mainstyle.css" rel="stylesheet" title="basicstyle" type="text/css" />
 
-        <META http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <META http-equiv="Content-type" content="text/html; charset=utf-8" />
     <TITLE>Billboard for Bands</TITLE>
 </HEADER>
 <BODY>
-	
+    <div class="container-narrow">
         <DIV>
                 <DIV id="page_header">
                         <H1 id="mainHeader">Billboard For Bands</A></H1> <!-- removed <A href="http://127.0.0.1:8000/bfb_app/"> -->
@@ -34,19 +34,24 @@
                 			<A href="/bfb_app/restricted/">Restricted Page</A> |
                 			<A href="/bfb_app/logout/">Logout</A>
         			{% else %}
-							<DIV class="btn-group">
-							<a class="btn dropdown-toggle" data-toggle="dropdown" id="registerbutton" href="#">Register <span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu" id="registerDropdown">
-							<li><A href="/bfb_app/register/artist">Artist</A><li>
-							<li><A href="/bfb_app/register/promoter">Promoter</A><li>
-							</ul>
+							<div class="span4 offset10" id="loginbutton">
+								<ul class="nav nav-pills">
+								<A href="/bfb_app/login/"><button class="btn" type="button" id="showloginbutton" onclick ="this.style.visibility= 'hidden';">Login</button></A>
+								<div class="span2 offset1">
+								<div class="btn-group">
+									<a class="btn dropdown-toggle" data-toggle="dropdown" id="registerbutton" href="#">Register <span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu" id="registerDropdown">
+									<li><A href="/bfb_app/register/artist">Artist</A><li>
+									<li><A href="/bfb_app/register/promoter">Promoter</A><li>
+									</ul>
+								</div>
+								</div>
 							</div>
 							
-                			<A href="/bfb_app/login/"><button class="btn" type ="button" id ="showloginbutton" on click =" this.style.visibility= 'hidden';">Login</button></A>
 
         			{% endif %}
-			
+						</div>
                         
 </P>
 						</DIV>
@@ -60,27 +65,23 @@
 
 
 	<div class="navbar">
-    <div class="navbar-inner" style="-webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0;">
+    <div class="navbar-inner" style="-webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; overflow:hidden;">
     <div class="container">
-	        <ul class="nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Projects</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Downloads</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
-						<form class="navbar-form pull-right">
-	      		<input type="text" class="search-query span2" id="searchPlease" placeholder="Advert or Venue">
-			</form>
-            </div>
-          </div>
-        </div><!-- /.navbar -->
+	<div class="span12">
+		<ul class="nav">
+        	<li class="active"><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+		<form class="navbar-form pull-right">
+	      	<input type="text" class="search-query span2" id="searchPlease" placeholder="Advert or Venue">
+		</form>
+	</div>
     </div>
+    </div>
+    </div><!-- /.navbar -->
+    
 	<div style="clear:both; margin: 0 0 30px 0;">&nbsp;</div>
-
-
-                
 
                 <DIV>
                         {% block sidebar %}{% endblock %}
@@ -96,21 +97,12 @@
 
         <DIV>
 
-
-
-<FORM id="search_form" method="post" action="/bfb_app/search/">
-        {% csrf_token %}
-        Search:
-        <INPUT type="text" size="20" name="query" value="" id="query">
-        <INPUT type="submit" name="submit" value="Search" />
-</FORM>
-
 		<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
 		<script src="{{ STATIC_URL }}backstretch.js"></script>
 		<script type="text/javascript">
-		$.backstretch("/img/winter.jpg");
+		$.backstretch("{{ STATIC_URL }}imgs/background_1.jpg");
 		</script>
 
-
+</div>>
 </BODY>
 </HTML>

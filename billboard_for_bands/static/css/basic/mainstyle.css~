@@ -1,6 +1,21 @@
-body {
-background-image:url("subtle_carbon.png");
+body, html{
+height: 100%;
 }
+
+body {
+background-image:url("subtle_carbon_75_transparent.png") repeat 0 0;
+}
+
+/* Custom container */
+.container-narrow {
+  background: url("subtle_carbon_75_transparent.png") repeat 0 0;
+  margin: 0 auto;
+  padding: 10px;
+  max-width: 1000px;
+  min-height: 100%;
+}
+
+
 #mainHeader {
 text-align: center;
 	margin: 100px auto; /* was 200 */
@@ -26,30 +41,25 @@ text-align: center;
 #showloginbutton{
 	position:fixed;
 	top:5px;
-	left:1125px;
+	/*left:1125px;*/
 
 }
 
 #registerbutton{
 	position:fixed;
 	top:5px;
-	left:1190px;
+	/*left:1190px;*/
 }
 
 #registerDropdown{
 	position:fixed;
-	top:45px;
-	left:1190px;
+	top:35px;
+	left:1000px;
 }
 
-#search_form{
-	position:fixed;
-	top:190px;
-	left:950px
-}
+.navbar .container { height: 1em; top:100px;}
 
-
-
+/*
 #navbar ul {
 list-style-type:none;
 width:auto;
@@ -100,3 +110,4 @@ background-color:#DC4900;
 #navbar li.active {
 background-color:#F46D00;
 }
+*/
