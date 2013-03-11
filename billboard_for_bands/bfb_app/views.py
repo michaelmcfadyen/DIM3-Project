@@ -67,11 +67,8 @@ def promoterHome(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username))
 		print ad_list
-		count_list = []
-		for x in ad_list:
-			count_list.append(x.artist.count)
 		template = loader.get_template('bfb_app/promoterHome.html')
-		context = RequestContext(request,{'ad_list':ad_list, 'count_list':count_list}) 
+		context = RequestContext(request,{'ad_list':ad_list}) 
 		return HttpResponse(template.render(context))
 	elif Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():
 		template = loader.get_template('bfb_app/artistHome.html')
@@ -88,11 +85,8 @@ def artistHome(request):
 	if request.method == 'GET':
 		if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 			ad_list = Advert.objects.all()
-			count_list = []
-			for ad in ad_list:
-				count_list.append(ad.artist.count)
 			template = loader.get_template('bfb_app/artistHome.html')
-			context = RequestContext(request,{'ad_list':ad_list,'count_list':count_list}) 
+			context = RequestContext(request,{'ad_list':ad_list}) 
 			return HttpResponse(template.render(context))
 	elif request.method == 'POST' and request.user.is_authenticated():
 		advert_title = request.POST['']
@@ -135,10 +129,7 @@ def index(request):
         # but later on we will be putting data in the context which the template engine
         # will use when it renders the template into a page.
 	ad_list = Advert.objects.all()
-	count_list = []
-	for x in ad_list:
-		count_list.append(x.artist.count)
-        context = RequestContext(request, {'ad_list':ad_list,'count_list':count_list})
+        context = RequestContext(request, {'ad_list':ad_list})
         # render the template using the provided context and return as http response.
         return HttpResponse(template.render(context))
 
