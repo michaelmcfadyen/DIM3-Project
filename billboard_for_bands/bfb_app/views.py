@@ -32,6 +32,7 @@ def process_JSON(request):
 	if request.method == 'POST' and request.user.is_authenticated():
 		json_data = json.loads(request.raw_post_data)
 		advert_pk = json_data['advertID']
+		print advert_pk
 		if(Advert.objects.get(pk=advert_pk).count == 0):
 			advert = Advert.objects.get(pk=advert_pk)		
 			artist_user = Artist.objects.get(username=request.user.username)
