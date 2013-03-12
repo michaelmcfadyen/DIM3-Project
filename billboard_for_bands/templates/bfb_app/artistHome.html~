@@ -11,7 +11,7 @@
 			<li><a href="/bfb_app/appliedGigs">Applied Gigs</a></li>
         </ul>
 		<form class="navbar-form pull-right">
-	      	<input type="text" class="search-query span3" id="searchPlease" placeholder="Advert or Venue">
+	      	
 			{% if user.is_authenticated %}
 			Welcome {{ user.username }}  |
 			<a href="/bfb_app/logout/"> Logout </a>
@@ -34,14 +34,15 @@
 {% if ad_list %}
 
 <h2>Upcoming Gigs</h2>
-<table class="table table-striped" id="gigtable">
+<table class="table" id="gigtable">
 <thead>
 	<tr>  
-	<th><font color="f9f9f9">Venue</th></font> 
-	<th><font color="f9f9f9">Artist</th></font>  
-	<th><font color="f9f9f9">Date</th></font>
-	<th><font color="f9f9f9">No. of Applicants</th></font>
-	<th><font color="f9f9f9">Apply</th></font>    
+	<th>Venue</th>
+	<th>Artist</th>
+	<th>Date</th>
+	<th>No. of Applicants</th>
+	<th>Apply</th> 
+	<th>Status</th>    
 	</tr>  
 </thead>
   
@@ -52,26 +53,33 @@
 		<td>{{ad.band}}</td>
 		<td>{{ad.date}}</td>
 		<td>{{ad.artist.count}}</td>
-	{% if ad in applied_list %}
-		<td><button class="btn btn-primary disabled" id="{{ad.pk}}" onclick="apply_click('this.id')" type="button">Applied</button></td>
-	{% else %}
-		<td><a href="#" id="{{ad.pk}}" onclick="apply_click(this.id)" class="btn btn-primary">Apply</a></td>
-	{% endif %}
+		<td>{{ad.status}}</td>
+		<td>
+		{% if ad in applied_list %}
+			<div class="btn-toolbar">
+				<button class="btn btn-danger" id="{{ad.pk}}" onclick="apply_click(this.id)" type="button">Withdraw</button>
+			</div>
+		{% else %}
+			<a href="#" id="{{ad.pk}}" onclick="apply_click(this.id)" class="btn btn-primary">Apply</a>
+		{% endif %}
+		</td>
 		</tr>
 	{% endfor %}
-</tbody>
 </table>
+
 {% else %}
         <h3>No Adverts at present.</h3>
 {% endif %}
 
 
 <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript">
 function apply_click(click_id) {
-
+	
 	var id_json = {'advertID': click_id};
 	alert("id is " + click_id);
+
 	$.ajax({
     	url: '/bfb_app/process',
     	type: "POST",
@@ -79,11 +87,16 @@ function apply_click(click_id) {
     	data: JSON.stringify(id_json),
     	dataType: 'text', 
     	success: function(result) {
-			alert("YO");
-       	 	alert(result);
-			document.getElementById(click_id).setAttribute("class","btn btn-primary disabled");
-			document.getElementById(click_id).setAttribute("onclick", "#");
+			if ($("#"+click_id).attr("value") == "Apply") { 
+				$("#"+click_id).attr("class","btn btn-danger");
+				$("#"+click_id).text("Withdraw");
+			}
+			else {
+				$("#'click_id'").attr("class","btn btn-primary");
+				$("#'click_id'").text("Apply");
+			}
    	 	}
+		
 	});	
 }
 </script>

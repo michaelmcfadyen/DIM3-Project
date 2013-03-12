@@ -8,10 +8,10 @@
         	<li class="active"><a href="/bfb_app/PromoterHome">Home</a></li>
             <li><a href="/bfb_app/adv_add">Create Gig</a></li>
 			<li><a href="/bfb_app/PromoterProfile">Edit Profile</a></li>
-			<li><a href="/bfb_app/reviewSubmissions">Review Submission</a></li>
+			<li><a href="/bfb_app/reviewSubmissions">Review Submissions</a></li>
         </ul>
 		<form class="navbar-form pull-right">
-	      	<input type="text" class="search-query span3" id="searchPlease" placeholder="Advert or Venue">
+	      	
 			{% if user.is_authenticated %}
 			Welcome {{ user.username }}  |
 			<a href="/bfb_app/logout/"> Logout </a>
@@ -34,13 +34,13 @@
 {% if ad_list %}
 
 <h2>All gigs</h2>
-<table class="table table-striped" id="gigtable">
+<table class="table" id="gigtable">
 <thead>
 	<tr>  
-	<th><font color="f9f9f9">Venue</th></font> 
-	<th><font color="f9f9f9">Artist</th></font>  
-	<th><font color="f9f9f9">Date</th></font>
-	<th><font color="f9f9f9">No. of Applicants</th></font>     
+	<th>Venue</th>
+	<th>Artist</th>  
+	<th>Date</th>
+	<th>No. of Applicants</th>     
 	</tr>  
 </thead>
   

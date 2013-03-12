@@ -1,0 +1,46 @@
+{% extends 'bfb_app/base.html' %}
+{% block content %}
+<div class="navbar">
+    <div class="navbar-inner" style="-webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; overflow:hidden; top=100px;">
+    <div class="container">
+	<div class="span12">
+	<ul class="nav">
+        	<li><a href="/bfb_app/PromoterHome">Home</a></li>
+            <li><a href="/bfb_app/adv_add">Create Gig</a></li>
+			<li class="active"><a href="/bfb_app/PromoterProfile">View Profile</a></li>
+			<li><a href="/bfb_app/reviewSubmissions">Review Submissions</a></li>
+        </ul>
+		<form class="navbar-form pull-right">
+	      	
+			{% if user.is_authenticated %}
+			Welcome {{ user.username }}  |
+			<a href="/bfb_app/logout/"> Logout </a>
+			{% else %}
+			<div class="btn-group">
+				<a class="btn dropdown-toggle" data-toggle="dropdown" id="registerbutton" href="#">Register <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" id="registerDropdown">
+					<li><A href="/bfb_app/register/artist">Artist</A><li>
+					<li><A href="/bfb_app/register/promoter">Promoter</A><li>
+				</ul>
+				<A href="/bfb_app/login/"><button class="btn" type="button" id="showloginbutton" onclick ="this.style.visibility= 'hidden';">Login</button></A>
+			</div>
+			{% endif %}
+		</form>
+	</div>
+    </div>
+    </div>
+</div><!-- /.navbar -->
+
+<div class="span6">
+<h3>User: {{profile.name}}
+<address>
+  <font color="f9f9f9">
+  Phone: {{profile.phone_num}} <br><br>
+  Email: {{profile.email}} <br><br>
+  </font>
+</address>
+</h3>
+
+</div>
+{% endblock %}

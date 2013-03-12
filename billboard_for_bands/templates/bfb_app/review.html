@@ -5,13 +5,13 @@
     <div class="container">
 	<div class="span12">
 		<ul class="nav">
-        	<li class="active"><a href="/bfb_app/PromoterHome">Home</a></li>
+        	<li><a href="/bfb_app/PromoterHome">Home</a></li>
             <li><a href="/bfb_app/adv_add">Create Gig</a></li>
-			<li><a href="/bfb_app/PromoterProfile">View Profile</a></li>
-			<li><a href="/bfb_app/reviewSubmissions">Review Submissions</a></li>
+			<li><a href="/bfb_app/PromoterProfile">Edit Profile</a></li>
+			<li class="active"><a href="/bfb_app/reviewSubmissions">Review Submission</a></li>
         </ul>
 		<form class="navbar-form pull-right">
-	      	
+	      
 			{% if user.is_authenticated %}
 			Welcome {{ user.username }}  |
 			<a href="/bfb_app/logout/"> Logout </a>
@@ -31,37 +31,17 @@
     </div>
     </div>
 </div><!-- /.navbar -->
-{% if ad_list %}
 
-<h2>All gigs</h2>
-<table class="table" id="gigtable">
-<thead>
-	<tr>  
-	<th>Venue</th>
-	<th>Artist</th>  
-	<th>Date</th>
-	<th>No. of Applicants</th>     
-	</tr>  
-</thead>
-  
-<tbody>
-	{% for ad in ad_list %}
-	<tr>
-	<td>{{ad.venue}}</td>
-	<td>{{ad.band}}</td>
-	<td>{{ad.date}}</td>
-	<td>{{ad.artist.count}}</td>
-	<tr>
-	{% endfor %}
-</table>
+<font color="white">
+{% if advert.artist.all %}
+{% for artist in advert.artist.all %}
+	Name: {{artist.name}} <br>
+	Website: {{artist.website}} <br>
+	Genre: {{artist.genre}} <br>
+	Email: {{artist.email}} <br>
+	Phone: {{artist.phone_number}} <br>
+{% endfor %}
 {% else %}
-        <h3>No Adverts at present.</h3>
+<h3>No applicants.</h3>
 {% endif %}
 {% endblock %}
-
-<div id="about">
-<p>
-</font>
-</p>
-</div>
-<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>

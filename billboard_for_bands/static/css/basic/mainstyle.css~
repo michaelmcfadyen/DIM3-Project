@@ -15,6 +15,13 @@ h3 {
 	color: #f9f9f9;
 }
 
+.btn-toolbar {
+	margin-top:0;
+	margin-bottom:0;
+}
+.table {
+	background-color: #f9f9f9;
+}
 
 /* Custom container */
 .container-narrow {
@@ -42,10 +49,13 @@ text-align: center;
         border-radius: 0px 0px 15px 15px;
    margin: 0px auto;
    padding: 5px 5px 5px 10px ;
-        position:center;/* You can also use position: absolute; */
-       
-        
-        
+        position:center;/* You can also use position: absolute; */    
+}
+
+#reviewbtn{
+	position: absolute;
+	top:285px;
+	left:290px;
 }
 /*
 #showloginbutton{
@@ -64,7 +74,7 @@ text-align: center;
 
 #registerDropdown{
 	position:fixed;
-	top:220px;
+	top:250px;
 	left:950px;
 }
 
