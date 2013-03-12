@@ -31,7 +31,7 @@ def process_submission(request):
 		advert = Advert.objects.get(pk=advert_pk)
 		advert.status='CHOSEN'
 		print advert
-		HttpResponseRedirect("/bfb_app/review")
+		return HttpResponseRedirect("/bfb_app/review")
 	else:
 		print 'else'
 		template = loader.get_template('bfb_app/index.html')
