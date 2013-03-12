@@ -20,6 +20,7 @@ urlpatterns = patterns('',
 	url(r'^reviewSubmissions',views.reviewSubmissions, name = 'Review Submissions'),
 	url(r'^browse',views.anon_browse,name = 'Browse'),
 	url(r'^artistBrowse', views.artist_browse, name = 'Artist Browse'),
-	url(r'^appliedGigs',views.artist_applied_gigs, name = 'Applied Gigs')
+	url(r'^appliedGigs',views.artist_applied_gigs, name = 'Applied Gigs'),
+	url(r'^process',views.process, name = 'Process')
 
 )
