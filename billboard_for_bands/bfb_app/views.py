@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django import forms
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import simplejson
 import datetime
 
 def base(request):
@@ -141,7 +142,8 @@ def artistHome(request):
 			context = RequestContext(request,{'ad_list':ad_list,'applied_list':applied_list}) 
 			return HttpResponse(template.render(context))
 	elif request.method == 'POST' and request.user.is_authenticated():
-		advert_pk = request.POST['advertID']
+		json_data = simplejson.loads(request.raw_post_data)
+		advert_pk = json_data['advertID']
 		advert = Advert.objects.filter(pk=advert_pk)
 		if(advert.count > 0):
 			for ad in advert:
