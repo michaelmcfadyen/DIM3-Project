@@ -184,9 +184,9 @@ def artistHome(request):
 
 def artistProfile(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		profile = Artist.objects.filter(username=request.user.username)[0]
+		profile = Artist.objects.filter(username=request.user.username)
 		template = loader.get_template('bfb_app/artistProfile.html')
-		context = RequestContext(request,{profile})
+		context = RequestContext(request,{'profile':profile})
 		return HttpResponse(template.render(context))
 	else:
        		template = loader.get_template('bfb_app/index.html')
