@@ -29,7 +29,7 @@ def process_submission(request):
 		advert = Advert.objects.get(pk=advert_pk)
 		print advert
 		context = RequestContext(request,{'advert':advert})
-		return render_to_response('bfb_app/reviewSubmissions',context)
+		return render_to_response('bfb_app/submission_review',context)
 	else:
 		print 'else'
 		template = loader.get_template('bfb_app/index.html')
