@@ -133,7 +133,7 @@ def artistHome(request):
 	context = RequestContext(request)
 	if request.method == 'GET':
 		if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-			ad_list = Advert.objects.all().order_by('date')[:5]
+			ad_list = Advert.objectsfilter(status='OPEN').order_by('date')[:5]
 			template = loader.get_template('bfb_app/artistHome.html')
 			context = RequestContext(request,{'ad_list':ad_list}) 
 			return HttpResponse(template.render(context))

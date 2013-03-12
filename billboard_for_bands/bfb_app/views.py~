@@ -220,9 +220,9 @@ def add_advert(request):
                 	        # so lets save the data to the model
                 	        ad = form.save(commit=False)
 				if (ad.date < datetime.date.today()):
-					ad.status = 'CL'
+					ad.status = 'CLOSED'
 				else:
-					ad.status = 'OP'
+					ad.status = 'OPEN'
 				ad.promoter = Promoter.objects.filter(username=request.user.username)[0]
 				ad.save()
                 	        # show the index page with the list of categories
