@@ -22,9 +22,9 @@ def anon_home(request):
         	context = RequestContext(request, {'ad_list':ad_list})
         	return HttpResponse(template.render(context))
 	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		return HttpResponseRedirect('bfb_app/promoterHome')
+		return HttpResponseRedirect('/promoterHome')
 	else:
-		return HttpResponseRedirect('bfb_app/artistHome')
+		return HttpResponseRedirect('/artistHome')
 
 def review(request):
 	advert = Advert.objects.filter(status='CLOSED')[0]
@@ -51,9 +51,9 @@ def anon_browse(request):
 		context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		return HttpResponseRedirect('bfb_app/PromoterHome')
+		return HttpResponseRedirect('/PromoterHome')
 	else:
-		return HttpResponseRedirect('bfb_app/artistHome')
+		return HttpResponseRedirect('/artistHome')
 		
 def artist_browse(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -64,9 +64,9 @@ def artist_browse(request):
 		print applied_list
 		return HttpResponse(template.render(context))
 	elif (Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		return HttpResponseRedirect('bfb_app/PromoterHome')
+		return HttpResponseRedirect('/PromoterHome')
 	else:
-		return HttpResponseRedirect('bfb_app/index')
+		return HttpResponseRedirect('/index')
 
 def artist_applied_gigs(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -75,9 +75,9 @@ def artist_applied_gigs(request):
 		context = RequestContext(request,{'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 	elif  (Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		return HttpResponseRedirect('bfb_app/promoterHome')
+		return HttpResponseRedirect('/promoterHome')
 	else:
-		return HHttpResponseRedirect('bfb_app/index')
+		return HHttpResponseRedirect('/index')
 
 def promoterProfile(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -87,7 +87,7 @@ def promoterProfile(request):
 		context = RequestContext(request,{'profile':profile})
 		return HttpResponse(template.render(context))
 	else:
-		return HttpResponseRedirect('bfb_app/index')
+		return HttpResponseRedirect('/index')
 
 def promoterHome(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -97,9 +97,9 @@ def promoterHome(request):
 		context = RequestContext(request,{'ad_list':ad_list}) 
 		return HttpResponse(template.render(context))
 	elif Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():
-		return HttpResponseRedirect('bfb_app/artistHome')
+		return HttpResponseRedirect('/artistHome')
 	else:
-		return HttpResponseRedirect('bfb_app/index')
+		return HttpResponseRedirect('/index')
 
 def reviewSubmissions(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -108,9 +108,9 @@ def reviewSubmissions(request):
 		context = RequestContext(request,{'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 	elif Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():
-		return HttpResponseRedirect('bfb_app/artistHome')
+		return HttpResponseRedirect('/artistHome')
 	else:
-		return HttpResponseRedirect('bfb_app/index')
+		return HttpResponseRedirect('/index')
 
 @csrf_exempt
 def artistHome(request):
@@ -123,9 +123,9 @@ def artistHome(request):
 			context = RequestContext(request,{'ad_list':ad_list,'applied_list':applied_list}) 
 			return HttpResponse(template.render(context))
 	elif Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():	
-		return HttpResponseRedirect('bfb_app/promoterHome')
+		return HttpResponseRedirect('/promoterHome')
 	else:
-		return HttpResponseRedirect('bfb_app/index')
+		return HttpResponseRedirect('/')
 
 def artistProfile(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -134,9 +134,9 @@ def artistProfile(request):
 		context = RequestContext(request,{'profile':profile})
 		return HttpResponse(template.render(context))
 	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		return HttpResponseRedirect('bfb_app/promoterHome')
+		return HttpResponseRedirect('/promoterHome')
 	else:
-		return HttpResponseRedirect('bfb_app/index')
+		return HttpResponseRedirect('/index')
 
 def add_advert(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
