@@ -26,14 +26,25 @@
 	<div id="page_header">
     	<H1 id="mainHeader">Billboard For Bands</A></H1> <!-- removed <A href="http://127.0.0.1:8000/bfb_app/"> -->
 	</div>
-						
+			
+	<div style="clear:both; margin: 0 0 30px 0;">&nbsp;</div>
+
+                <DIV id="page_content">
+                        {% block content %}{% endblock %}
+                </DIV>
+
+                <DIV id="page_footer">
+                        {% block footer %}{% endblock %}
+                </DIV>
+
+    <DIV>	
+	<!-->		
 	<div class="navbar">
     <div class="navbar-inner" style="-webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; overflow:hidden; top=100px;">
     <div class="container">
 	<div class="span12">
 		<ul class="nav">
         	<li class="active"><a href="/bfb_app/">Home</a></li>
-            <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
 		<form class="navbar-form pull-right">
@@ -58,21 +69,6 @@
     </div>
     </div><!-- /.navbar -->
     
-	<div style="clear:both; margin: 0 0 30px 0;">&nbsp;</div>
-
-                <DIV>
-                        {% block sidebar %}{% endblock %}
-                </DIV>
-
-                <DIV id="page_content">
-                        {% block content %}{% endblock %}
-                </DIV>
-
-                <DIV id="page_footer">
-                        {% block footer %}{% endblock %}
-                </DIV>
-
-        <DIV>
 
 		<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
 		<script src="{{ STATIC_URL }}backstretch.js"></script>
@@ -80,6 +76,6 @@
 		$.backstretch("{{ STATIC_URL }}imgs/background_1.jpg");
 		</script>
 
-</div>>
+</div>
 </BODY>
 </HTML>

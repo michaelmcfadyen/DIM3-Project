@@ -1,10 +1,20 @@
 body, html{
-height: 100%;
+	height: 100%;
 }
 
 body {
-background-image:url("subtle_carbon_75_transparent.png") repeat 0 0;
+	background-image:url("subtle_carbon_75_transparent.png") repeat 0 0;
 }
+
+p {color:#f9f9f9; }
+
+h2 {color: #f9f9f9; }
+
+h3 {
+	font-size:20pt;
+	color: #f9f9f9;
+}
+
 
 /* Custom container */
 .container-narrow {
@@ -15,10 +25,9 @@ background-image:url("subtle_carbon_75_transparent.png") repeat 0 0;
   min-height: 100%;
 }
 
-
 #mainHeader {
 text-align: center;
-	margin: 20px auto; /* was 200 */
+	margin: 30px auto; /* was 200 */
 	margin-top: 80px;
 	font-family: "League-Gothic", Courier;
 	font-size: 75px; text-transform: uppercase;
@@ -55,7 +64,7 @@ text-align: center;
 
 #registerDropdown{
 	position:fixed;
-	top:200px;
+	top:220px;
 	left:950px;
 }
 

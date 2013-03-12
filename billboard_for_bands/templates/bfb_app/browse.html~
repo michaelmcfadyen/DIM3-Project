@@ -1,0 +1,70 @@
+{% extends 'bfb_app/base.html' %}
+{% block content %}
+<div class="navbar">
+    <div class="navbar-inner" style="-webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; overflow:hidden; top=100px;">
+    <div class="container">
+	<div class="span12">
+		<ul class="nav">
+        	<li><a href="/bfb_app/">Home</a></li>
+            <li class="active"><a href="/bfb_app/browse.html">Browse</a></li>
+        </ul>
+		<form class="navbar-form pull-right">
+	      	<input type="text" class="search-query span3" id="searchPlease" placeholder="Advert or Venue">
+			{% if user.is_authenticated %}
+			Welcome {{ user.username }}  |
+			<a href="/bfb_app/logout/"> Logout </a>
+			{% else %}
+			<div class="btn-group">
+				<a class="btn dropdown-toggle" data-toggle="dropdown" id="registerbutton" href="#">Register <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" id="registerDropdown">
+					<li><A href="/bfb_app/register/artist">Artist</A><li>
+					<li><A href="/bfb_app/register/promoter">Promoter</A><li>
+				</ul>
+				<A href="/bfb_app/login/"><button class="btn" type="button" id="showloginbutton" onclick ="this.style.visibility= 'hidden';">Login</button></A>
+			</div>
+			{% endif %}
+		</form>
+	</div>
+    </div>
+    </div>
+</div><!-- /.navbar -->
+{% if ad_list %}
+
+<h2>All gigs</h2>
+<table class="table table-striped" id="gigtable">
+<thead>
+	<tr>  
+	<th><font color="f9f9f9">Venue</th></font> 
+	<th><font color="f9f9f9">Artist</th></font>  
+	<th><font color="f9f9f9">Date</th></font>
+	<th><font color="f9f9f9">No. of Applicants</th></font>     
+	</tr>  
+</thead>
+  
+<tbody>
+	{% for ad in ad_list %}
+	<tr>
+	<td>{{ad.venue}}</td>
+	<td>{{ad.band}}</td>
+	<td>{{ad.date}}</td>
+	<td>{{ad.artist.count}}</td>
+	<tr>
+	{% endfor %}
+</table>
+{% else %}
+        <h3>No Adverts at present.</h3>
+{% endif %}
+{% endblock %}
+
+<div id="about">
+<p>
+<h2>About</h2>
+<font color="f9f9f9">Billboard for Bands is a platform for communication. <p>
+<h2><span class="icon-ok-circle"></span> Promoters advertise. <p>
+<span class="icon-ok-circle"></span> Bands apply.</h2>
+
+</font>
+</p>
+</div>
+<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
