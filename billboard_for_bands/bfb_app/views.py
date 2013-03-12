@@ -41,7 +41,7 @@ def anon_browse(request):
 		
 def artist_browse(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		ad_list = Advert.objects.filter(status = 'OPEN').order_by('date')
+		ad_list = Advert.objects.filter(status='OPEN').order_by('date')
 		template = loader.get_template('bfb_app/artistBrowse.html')
 		context = RequestContext(request,{'ad_list':ad_list})
 		print ad_list
