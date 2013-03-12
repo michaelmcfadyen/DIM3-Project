@@ -35,7 +35,7 @@ def process_JSON(request):
 		print advert_pk
 		advert = Advert.objects.get(pk=advert_pk)
 		artist_user = Artist.objects.get(username=request.user.username)
-		if(artist_user not in advert.artist.all):
+		if(advert.artist.objects.get(username=request.user.username).count == 0):
 			advert.artist.add(artist_user)
 		else:
 			advert.artist.remove(artist_user)
