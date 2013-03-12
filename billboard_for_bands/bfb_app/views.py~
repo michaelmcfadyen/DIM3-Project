@@ -15,6 +15,9 @@ from django.utils import simplejson
 import json
 import datetime
 
+def review(request):
+	
+
 @csrf_exempt
 def process_submission(request):
 	if request.method == 'POST' and request.user.is_authenticated():
@@ -24,8 +27,9 @@ def process_submission(request):
 		advert = Advert.objects.get(pk=advert_pk)
 		print advert
 		advert.artist.add(artist_user)
+		template = loader.get_template('bfb_app/review.html')
 		context = RequestContext(request,{'advert':advert})
-		return render_to_response('bfb_app/artistHome.html',{'advert':advert},context)
+		HttpResponse(template.render(context)))
 	else:
 		print 'else'
 		template = loader.get_template('bfb_app/index.html')

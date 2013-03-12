@@ -14,6 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
 import json
 import datetime
+	
 
 @csrf_exempt
 def process_submission(request):
@@ -24,8 +25,9 @@ def process_submission(request):
 		advert = Advert.objects.get(pk=advert_pk)
 		print advert
 		advert.artist.add(artist_user)
+		template = loader.get_template('bfb_app/review.html')
 		context = RequestContext(request,{'advert':advert})
-		return render_to_response('bfb_app/submission_review',{'advert':advert},context)
+		HttpResponse(template.render(context)))
 	else:
 		print 'else'
 		template = loader.get_template('bfb_app/index.html')
