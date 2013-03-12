@@ -15,6 +15,16 @@ from django.utils import simplejson
 import json
 import datetime
 	
+def anon_home(request):
+	if(request.user.is_authenticated() == False):
+        	template = loader.get_template('bfb_app/index.html')
+		ad_list = Advert.objects.filter(status='OPEN').order_by('date')[:6]
+        	context = RequestContext(request, {'ad_list':ad_list})
+        	return HttpResponse(template.render(context))
+	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		return HttpResponseRedirect('bfb_app/promoterHome')
+	else:
+		return HttpResponseRedirect('bfb_app/artistHome')
 
 def review(request):
 	advert = Advert.objects.filter(status='CLOSED')[0]
@@ -127,20 +137,6 @@ def artistProfile(request):
 		return HttpResponseRedirect('bfb_app/promoterHome')
 	else:
 		return HttpResponseRedirect('bfb_app/index')
-
-def index(request):
-	if(request.user.is_authenticated() == False):
-        	template = loader.get_template('bfb_app/index.html')
-		ad_list = Advert.objects.filter(status='OPEN').order_by('date')[:6]
-        	context = RequestContext(request, {'ad_list':ad_list})
-        	return HttpResponse(template.render(context))
-	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		return HttpResponseRedirect('bfb_app/promoterHome')
-	else:
-		return HttpResponseRedirect('bfb_app/artistHome')
-
-def search(request):
-	context = RequestContext(request)
 
 def add_advert(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
