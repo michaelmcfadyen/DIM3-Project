@@ -16,22 +16,12 @@ import json
 import datetime
 	
 
-@csrf_exempt
-def process_submission(request):
-	if request.method == 'POST' and request.user.is_authenticated():
-		json_data = json.loads(request.raw_post_data)
-		advert_pk = json_data['advertID']
-		print 'here'
-		advert = Advert.objects.get(pk=advert_pk)
-		print advert
-		context = RequestContext(request,{'advert':advert})
-		return render_to_response('bfb_app/reviewSubmissions.html', {}, context)
-	else:
-		print 'else'
-		template = loader.get_template('bfb_app/index.html')
-		ad_list = Advert.objects.all().order_by('date')[:6]
-        	context = RequestContext(request, {'ad_list':ad_list})
-		return HttpResponse(template.render(context))
+def review(request):
+	advert = Advert.objects.filter(status='CLOSED')[0]
+	template = loader.get_template('bfb_app/review.html')
+	context = RequestContext(request,{'advert':advert}) 
+	return HttpResponse(template.render(context))
+
 @csrf_exempt
 def process(request):
 	if request.method == 'POST' and request.user.is_authenticated():
