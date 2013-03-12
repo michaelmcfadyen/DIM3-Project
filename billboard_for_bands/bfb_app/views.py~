@@ -35,10 +35,12 @@ def process_JSON(request):
 		print advert_pk
 		advert = Advert.objects.get(pk=advert_pk)
 		artist_user = Artist.objects.get(username=request.user.username)
-		if(advert.artist.objects.get(username=request.user.username)):
+		if(advert.artist.objects.get(username=request.user.username).count == 0):
+			print 'add'
 			advert.artist.add(artist_user)
 		else:
 			advert.artist.remove(artist_user)
+			print 'remove'
 		context = RequestContext(request,{})
 		return render_to_response('bfb_app/artistHome.html',{},context)
 	else:
