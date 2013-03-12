@@ -14,6 +14,24 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
 import json
 import datetime
+
+@csrf_exempt
+def process_submission(request):
+	if request.method == 'POST' and request.user.is_authenticated():
+		json_data = json.loads(request.raw_post_data)
+		advert_pk = json_data['advertID']
+		print 'here'
+		advert = Advert.objects.get(pk=advert_pk)
+		print advert
+		advert.artist.add(artist_user)
+		context = RequestContext(request,{'advert':advert})
+		return render_to_response('bfb_app/submission_review',{'advert':advert},context)
+	else:
+		print 'else'
+		template = loader.get_template('bfb_app/index.html')
+		ad_list = Advert.objects.all().order_by('date')[:10]
+        	context = RequestContext(request, {'ad_list':ad_list})
+		return HttpResponse(template.render(context))
 @csrf_exempt
 def process(request):
 	if request.method == 'POST' and request.user.is_authenticated():
