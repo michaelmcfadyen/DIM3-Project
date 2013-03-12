@@ -15,16 +15,6 @@ from django.utils import simplejson
 import json
 import datetime
 	
-def anon_home(request):
-	if(request.user.is_authenticated() == False):
-        	template = loader.get_template('bfb_app/index.html')
-		ad_list = Advert.objects.filter(status='OPEN').order_by('date')[:6]
-        	context = RequestContext(request, {'ad_list':ad_list})
-        	return HttpResponse(template.render(context))
-	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		return HttpResponseRedirect('/promoterHome')
-	else:
-		return HttpResponseRedirect('/artistHome')
 
 def review(request):
 	advert = Advert.objects.filter(status='CLOSED')[0]
@@ -33,6 +23,28 @@ def review(request):
 	template = loader.get_template('bfb_app/review.html')
 	context = RequestContext(request,{'advert':advert}) 
 	return HttpResponse(template.render(context))
+
+@csrf_exempt
+def process_JSON(request):
+	if request.method == 'POST' and request.user.is_authenticated():
+		json_data = json.loads(request.raw_post_data)
+		advert_pk = json_data['advertID']
+		print advert_pk
+		advert = Advert.objects.get(pk=advert_pk)
+		artist_user = Artist.objects.get(username=request.user.username)
+		if(artist_user not in advert.artist.all()):
+			advert.artist.add(artist_user)
+		else:
+			advert.artist.remove(artist_user)
+		context = RequestContext(request,{})
+		return render_to_response('bfb_app/artistHome.html',{},context)
+	else:
+
+		template = loader.get_template('bfb_app/index.html')
+		ad_list = Advert.objects.all().order_by('date')[:6]
+        	context = RequestContext(request, {'ad_list':ad_list})
+		return HttpResponse(template.render(context))
+		
 
 def base(request):
 	template = loader.get_template('bfb_app/base.html')
@@ -51,9 +63,15 @@ def anon_browse(request):
 		context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		return HttpResponseRedirect('/PromoterHome')
+		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')[:5]
+		template = loader.get_template('bfb_app/promoterHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
 	else:
-		return HttpResponseRedirect('/artistHome')
+		ad_list = Advert.objects.all().order_by('date')[:5]
+		template = loader.get_template('bfb_app/artistHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
 		
 def artist_browse(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -61,12 +79,17 @@ def artist_browse(request):
 		applied_list = Advert.objects.filter(status='OPEN',artist=Artist.objects.filter(username=request.user.username))
 		template = loader.get_template('bfb_app/artistBrowse.html')
 		context = RequestContext(request,{'ad_list':ad_list,'applied_list':applied_list})
-		print applied_list
 		return HttpResponse(template.render(context))
 	elif (Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		return HttpResponseRedirect('/PromoterHome')
+		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')[:5]
+		template = loader.get_template('bfb_app/promoterHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
 	else:
-		return HttpResponseRedirect('/')
+		template = loader.get_template('bfb_app/index.html')
+		ad_list = Advert.objects.all().order_by('date')[:6]
+        	context = RequestContext(request, {'ad_list':ad_list})
+		return HttpResponse(template.render(context))
 
 def artist_applied_gigs(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -75,31 +98,52 @@ def artist_applied_gigs(request):
 		context = RequestContext(request,{'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 	elif  (Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		return HttpResponseRedirect('/promoterHome')
+		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')[:5]
+		template = loader.get_template('bfb_app/promoterHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
 	else:
-		return HHttpResponseRedirect('/')
+		template = loader.get_template('bfb_app/index.html')
+		ad_list = Advert.objects.all().order_by('date')[:6]
+        	context = RequestContext(request, {'ad_list':ad_list})
+		return HttpResponse(template.render(context))
+
+def advertProfile(request):
+	context = RequestContext(request)
+	if request.method == 'POST':
+		advert_title = request.POST['']
+		advert = Advert.object.filter(title=advert_title)[0]
+		if(advert.count == 1):
+			template = loader.get_template('bfb_app/advertProfile')
+			context = RequestContext(request,{'advert' : advert})
+			return HttpResponse(template.render(context))
+		
 
 def promoterProfile(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		profile = Promoter.objects.get(username=request.user.username)
-		print profile
 		template = loader.get_template('bfb_app/promoterProfile.html')
 		context = RequestContext(request,{'profile':profile})
 		return HttpResponse(template.render(context))
 	else:
-		return HttpResponseRedirect('/')
+		template = loader.get_template('bfb_app/index.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
 
 def promoterHome(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')[:5]
-		print ad_list
 		template = loader.get_template('bfb_app/promoterHome.html')
 		context = RequestContext(request,{'ad_list':ad_list}) 
 		return HttpResponse(template.render(context))
 	elif Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():
-		return HttpResponseRedirect('/artistHome')
+		template = loader.get_template('bfb_app/artistHome.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
 	else:
-		return HttpResponseRedirect('/')
+		template = loader.get_template('bfb_app/index.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
 
 def reviewSubmissions(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -108,9 +152,13 @@ def reviewSubmissions(request):
 		context = RequestContext(request,{'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 	elif Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():
-		return HttpResponseRedirect('/artistHome')
+		template = loader.get_template('bfb_app/artistHome.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
 	else:
-		return HttpResponseRedirect('/')
+		template = loader.get_template('bfb_app/index.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
 
 @csrf_exempt
 def artistHome(request):
@@ -122,10 +170,25 @@ def artistHome(request):
 			template = loader.get_template('bfb_app/artistHome.html')
 			context = RequestContext(request,{'ad_list':ad_list,'applied_list':applied_list}) 
 			return HttpResponse(template.render(context))
+	elif request.method == 'POST' and request.user.is_authenticated():
+		json_data = simplejson.loads(request.raw_post_data)
+		advert_pk = json_data['advertID']
+		advert = Advert.objects.filter(pk=advert_pk)
+		if(advert.count > 0):
+			for ad in advert:
+				ad.artist = Artist.objects.filter(username=request.user.username);
+			return render_to_response('bfb_app/artistHome.html',{},context)
+		else:
+			print 'advert does not exist'
+			return render_to_response('bfb_app/artistHome.html',{},context)
 	elif Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():	
-		return HttpResponseRedirect('/promoterHome')
+		template = loader.get_template('bfb_app/promoterHome.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
 	else:
-		return HttpResponseRedirect('/')
+		template = loader.get_template('bfb_app/index.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
 
 def artistProfile(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -133,10 +196,36 @@ def artistProfile(request):
 		template = loader.get_template('bfb_app/artistProfile.html')
 		context = RequestContext(request,{'profile':profile})
 		return HttpResponse(template.render(context))
-	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		return HttpResponseRedirect('/promoterHome')
 	else:
-		return HttpResponseRedirect('/')
+       		template = loader.get_template('bfb_app/index.html')
+		ad_list = Advert.objects.all().order_by('date')[:6]
+        	context = RequestContext(request, {'ad_list':ad_list})
+		return HttpResponse(template.render(context))
+
+def index(request):
+	if(request.user.is_authenticated() == False):
+        	template = loader.get_template('bfb_app/index.html')
+		ad_list = Advert.objects.filter(status='OPEN').order_by('date')[:6]
+        	context = RequestContext(request, {'ad_list':ad_list})
+        	return HttpResponse(template.render(context))
+	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')[:5]
+		template = loader.get_template('bfb_app/promoterHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
+	else:
+		ad_list = Advert.objects.all().order_by('date')[:5]
+		template = loader.get_template('bfb_app/artistHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
+
+def about(request):
+	template = loader.get_template('bfb_app/about.html')
+	context = RequestContext(request,{})
+	return HttpResponse(template.render(context))
+
+def search(request):
+	context = RequestContext(request)
 
 def add_advert(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -217,7 +306,6 @@ def registerArtist(request):
                         #save_file(request.FILES['picture'])
                         registered = True
                 else:
-			print "Form is wrong"
                         print uform.errors
         else:
                 uform = ArtistForm()
@@ -261,22 +349,4 @@ def user_logout(request):
     # Redirect back to index page.
     return HttpResponseRedirect('/bfb_app/')
 
-@csrf_exempt
-def process_JSON(request):
-	if request.method == 'POST' and request.user.is_authenticated():
-		json_data = json.loads(request.raw_post_data)
-		advert_pk = json_data['advertID']
-		print advert_pk
-		advert = Advert.objects.get(pk=advert_pk)
-		artist_user = Artist.objects.get(username=request.user.username)
-		if(artist_user not in advert.artist.all()):
-			print 'add'
-			advert.artist.add(artist_user)
-		else:
-			advert.artist.remove(artist_user)
-			print 'remove'
-		context = RequestContext(request,{})
-		return render_to_response('bfb_app/artistHome.html',{},context)
-	else:
-		return HttpResponseRedirect('bfb_app/index.html')
 

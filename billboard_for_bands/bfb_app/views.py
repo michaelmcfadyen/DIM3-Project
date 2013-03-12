@@ -326,7 +326,6 @@ def user_login(request):
 		  if(Promoter.objects.filter(username=uname).count() > 0):
 			return HttpResponseRedirect("/bfb_app/PromoterHome")
 		  elif Artist.objects.filter(username=uname).count() > 0:
-			print "artist"
 			return HttpResponseRedirect("/bfb_app/ArtistHome")
 		  else:
 			return HttpResponseRedirect('bfb_app/index.html')
