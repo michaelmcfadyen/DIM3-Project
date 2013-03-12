@@ -23,7 +23,7 @@ def review(request):
 	return HttpResponse(template.render(context))
 
 @csrf_exempt
-def process(request):
+def process_JSON(request):
 	if request.method == 'POST' and request.user.is_authenticated():
 		json_data = json.loads(request.raw_post_data)
 		advert_pk = json_data['advertID']
@@ -201,21 +201,6 @@ def artistProfile(request):
 		ad_list = Advert.objects.all().order_by('date')[:6]
         	context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
-
-#def artist_applies(request):
-##	
-#	if (request.method == 'POST' and request.user.is_authenticated()):
-#		advert_title = request.POST['']
-#		date = request.POST['']
-#		advert = Advert.objects.filter(title=advert_title and date=d and status=OPEN)
-#		if(advert.count > 0):
-#			for ad in advert:
-#				ad.artist = request.user.username;
-#		else:
-#			print 'advert does not exist'
-#			return render_to_response('',{},context)
-#	else:
-#		return render_to_response('',{},context)
 
 def index(request):
 	if(request.user.is_authenticated() == False):

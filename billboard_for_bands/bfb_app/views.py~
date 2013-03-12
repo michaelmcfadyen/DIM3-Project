@@ -202,25 +202,10 @@ def artistProfile(request):
         	context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 
-#def artist_applies(request):
-##	
-#	if (request.method == 'POST' and request.user.is_authenticated()):
-#		advert_title = request.POST['']
-#		date = request.POST['']
-#		advert = Advert.objects.filter(title=advert_title and date=d and status=OPEN)
-#		if(advert.count > 0):
-#			for ad in advert:
-#				ad.artist = request.user.username;
-#		else:
-#			print 'advert does not exist'
-#			return render_to_response('',{},context)
-#	else:
-#		return render_to_response('',{},context)
-
 def index(request):
 	if(request.user.is_authenticated() == False):
         	template = loader.get_template('bfb_app/index.html')
-		ad_list = Advert.objects.filter(status='OPEN').order_by('date')[:10]
+		ad_list = Advert.objects.filter(status='OPEN').order_by('date')[:6]
         	context = RequestContext(request, {'ad_list':ad_list})
         	return HttpResponse(template.render(context))
 	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
