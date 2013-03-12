@@ -17,10 +17,10 @@ import datetime
 	
 
 def review(request):
-	advert = Advert.objects.get(status='CLOSED')[0]
-	advert.status='CHOSEN'
+	advert = Advert.objects.get(status='CLOSED')
+	artist_list = advert.artist
 	template = loader.get_template('bfb_app/review.html')
-	context = RequestContext(request,{'advert':advert}) 
+	context = RequestContext(request,{'artist_list':artist}) 
 	return HttpResponse(template.render(context))
 
 @csrf_exempt
