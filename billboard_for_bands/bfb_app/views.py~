@@ -24,7 +24,6 @@ def process_submission(request):
 		print 'here'
 		advert = Advert.objects.get(pk=advert_pk)
 		print advert
-		advert.artist.add(artist_user)
 		template = loader.get_template('bfb_app/review.html')
 		context = RequestContext(request,{'advert':advert})
 		HttpResponse(template.render(context))
