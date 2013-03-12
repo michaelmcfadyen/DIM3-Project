@@ -18,7 +18,7 @@ import datetime
 
 def review(request):
 	template = loader.get_template('bfb_app/review.html')
-	ad_list = Advert.objects.get(status='CHOSEN')
+	ad_list = Advert.objects.filter(status='CHOSEN')
 	context = RequestContext(request,{'ad_list',ad_list}) 
 	return HttpResponse(template.render(context))
 

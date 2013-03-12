@@ -30,6 +30,7 @@ def process_submission(request):
 		print 'here'
 		advert = Advert.objects.get(pk=advert_pk)
 		advert.status='CHOSEN'
+		print advert.status
 		print advert
 		return HttpResponseRedirect("/bfb_app/review")
 	else:
