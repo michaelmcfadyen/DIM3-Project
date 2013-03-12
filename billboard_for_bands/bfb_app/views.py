@@ -32,16 +32,18 @@ def process_JSON(request):
 	if request.method == 'POST' and request.user.is_authenticated():
 		json_data = json.loads(request.raw_post_data)
 		advert_pk = json_data['advertID']
-		print 'here'
-		advert = Advert.objects.get(pk=advert_pk)
-		print advert
-		artist_user = Artist.objects.get(username=request.user.username)
-		print artist_user
-		advert.artist.add(artist_user)
+		if(Advert.objects.get(pk=advert_pk).count == 0):
+			advert = Advert.objects.get(pk=advert_pk)		
+			artist_user = Artist.objects.get(username=request.user.username)
+			advert.artist.add(artist_user)
+		else:
+			advert = Advert.objects.get(pk=advert_pk)
+			artist_user = Artist.objects.get(username=request.user.username)
+			advert.artist.remove(artist_user)
 		context = RequestContext(request,{})
 		return render_to_response('bfb_app/artistHome.html',{},context)
 	else:
-		print 'else'
+
 		template = loader.get_template('bfb_app/index.html')
 		ad_list = Advert.objects.all().order_by('date')[:6]
         	context = RequestContext(request, {'ad_list':ad_list})
