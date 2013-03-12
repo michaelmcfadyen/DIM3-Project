@@ -24,7 +24,7 @@ def process_submission(request):
 		print 'here'
 		advert = Advert.objects.get(pk=advert_pk)
 		print advert
-		context = RequestContext(request,{'advert':advert}
+		context = RequestContext(request,{'advert':advert})
 		return render_to_response('bfb_app/reviewSubmissions.html', {}, context)
 	else:
 		print 'else'
