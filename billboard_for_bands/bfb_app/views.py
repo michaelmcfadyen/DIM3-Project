@@ -44,6 +44,7 @@ def artist_browse(request):
 		ad_list = Advert.objects.filter(status = 'OPEN').order_by('date')
 		template = loader.get_template('bfb_app/artistBrowse.html')
 		context = RequestContext(request,{'ad_list':ad_list})
+		print ad_list
 		return HttpResponse(template.render(context))
 	elif (Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')[:5]
