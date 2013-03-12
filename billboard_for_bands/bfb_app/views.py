@@ -18,6 +18,7 @@ import datetime
 
 def review(request):
 	advert = Advert.objects.filter(status='CLOSED')[0]
+	advert.status='CHOSEN'
 	template = loader.get_template('bfb_app/review.html')
 	context = RequestContext(request,{'advert':advert}) 
 	return HttpResponse(template.render(context))

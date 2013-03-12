@@ -18,12 +18,13 @@ import datetime
 
 def review(request):
 	advert = Advert.objects.filter(status='CLOSED')[0]
+	advert.status='OPEN'
 	template = loader.get_template('bfb_app/review.html')
 	context = RequestContext(request,{'advert':advert}) 
 	return HttpResponse(template.render(context))
 
 @csrf_exempt
-def process(request):
+def process_JSON(request):
 	if request.method == 'POST' and request.user.is_authenticated():
 		json_data = json.loads(request.raw_post_data)
 		advert_pk = json_data['advertID']
