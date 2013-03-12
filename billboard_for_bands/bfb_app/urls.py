@@ -20,6 +20,6 @@ urlpatterns = patterns('',
 	url(r'^artistBrowse', views.artist_browse, name = 'Artist Browse'),
 	url(r'^appliedGigs',views.artist_applied_gigs, name = 'Applied Gigs'),
 	url(r'^process',views.process_JSON, name = 'Process'),
-	url(r'^review', views.review, name = 'Review')
+	url(r'^review', views.review_advert_applicants, name = 'Review')
 
 )
