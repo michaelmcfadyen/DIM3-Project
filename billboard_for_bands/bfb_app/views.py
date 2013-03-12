@@ -33,7 +33,7 @@ def anon_browse(request):
 		template = loader.get_template('bfb_app/promoterHome.html')
 		context = RequestContext(request,{'ad_list':ad_list}) 
 		return HttpResponse(template.render(context))
-	else
+	else:
 		ad_list = Advert.objects.all().order_by('date')[:5]
 		template = loader.get_template('bfb_app/artistHome.html')
 		context = RequestContext(request,{'ad_list':ad_list}) 
@@ -55,6 +55,7 @@ def artist_browse(request):
 		ad_list = Advert.objects.all().order_by('date')[:10]
         	context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
+
 def advertProfile(request):
 	context = RequestContext(request)
 	if request.method == 'POST':
