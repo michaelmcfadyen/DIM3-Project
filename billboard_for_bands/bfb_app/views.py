@@ -13,7 +13,7 @@ from django import forms
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
 import datetime
-
+@csrf_exempt
 def process(request):
 	if request.method == 'POST' and request.user.is_authenticated():
 		json_data = simplejson.loads(request.raw_post_data)

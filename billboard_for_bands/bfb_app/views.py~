@@ -28,6 +28,7 @@ def process(request):
 			print 'advert does not exist'
 			return render_to_response('bfb_app/artistHome.html',{},context)
 	else:
+		print 'else'
 		template = loader.get_template('bfb_app/index.html')
 		ad_list = Advert.objects.all().order_by('date')[:10]
         	context = RequestContext(request, {'ad_list':ad_list})
