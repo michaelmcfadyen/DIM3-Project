@@ -19,6 +19,7 @@ import datetime
 def review(request):
 	advert = Advert.objects.filter(status='CLOSED')[0]
 	advert.status = 'CHOSEN'
+	advert.save()
 	print advert.title
 	print advert.status
 	print advert.band
