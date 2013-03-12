@@ -65,7 +65,7 @@ def promoterProfile(request):
 
 def promoterHome(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username))[:5]
+		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')[:5]
 		print ad_list
 		template = loader.get_template('bfb_app/promoterHome.html')
 		context = RequestContext(request,{'ad_list':ad_list}) 
@@ -84,7 +84,7 @@ def artistHome(request):
 	context = RequestContext(request)
 	if request.method == 'GET':
 		if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-			ad_list = Advert.objects.all()[:5]
+			ad_list = Advert.objects.all().order_by('date')[:5]
 			template = loader.get_template('bfb_app/artistHome.html')
 			context = RequestContext(request,{'ad_list':ad_list}) 
 			return HttpResponse(template.render(context))
@@ -128,7 +128,7 @@ def index(request):
         # create and define the context. We don't have any context at the moment
         # but later on we will be putting data in the context which the template engine
         # will use when it renders the template into a page.
-	ad_list = Advert.objects.all()[:10]
+	ad_list = Advert.objects.all().order_by('date')[:10]
         context = RequestContext(request, {'ad_list':ad_list})
         # render the template using the provided context and return as http response.
         return HttpResponse(template.render(context))
