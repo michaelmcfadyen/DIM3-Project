@@ -19,7 +19,7 @@ import datetime
 def review(request):
 	advert = Advert.objects.filter(status='CLOSED')[0]
 	advert.status = 'CHOSEN'
-	print advert.name
+	print advert.title
 	print advert.status
 	print advert.band
 	template = loader.get_template('bfb_app/review.html')
