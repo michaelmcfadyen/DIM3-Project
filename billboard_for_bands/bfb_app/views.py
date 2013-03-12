@@ -20,13 +20,13 @@ def process(request):
 		advert_pk = json_data['advertID']
 		print 'here'
 		advert = Advert.objects.filter(pk=advert_pk)
-			if(advert.count > 0):
-				for ad in advert:
-					ad.artist = Artist.filter.object(username=request.user.username);
-				return render_to_response('bfb_app/artistHome.html',{},context)
-			else:
-				print 'advert does not exist'
-				return render_to_response('bfb_app/artistHome.html',{},context)
+		if(advert.count > 0):
+			for ad in advert:
+				ad.artist = Artist.filter.object(username=request.user.username);
+			return render_to_response('bfb_app/artistHome.html',{},context)
+		else:
+			print 'advert does not exist'
+			return render_to_response('bfb_app/artistHome.html',{},context)
 	else:
 		template = loader.get_template('bfb_app/index.html')
 		ad_list = Advert.objects.all().order_by('date')[:10]
