@@ -43,17 +43,6 @@ def process_JSON(request):
 		ad_list = Advert.objects.all().order_by('date')[:6]
         	context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
-		
-
-def base(request):
-	template = loader.get_template('bfb_app/base.html')
-	context = RequestContext(request,{}) 
-	return HttpResponse(template.render(context))
-
-def register(request):
-	template = loader.get_template('bfb_app/register.html')
-	context = RequestContext(request,{}) 
-	return HttpResponse(template.render(context))
 
 def anon_browse(request):
 	if(request.user.is_authenticated() == False):
@@ -187,7 +176,7 @@ def artistProfile(request):
 		context = RequestContext(request,{}) 
 		return HttpResponse(template.render(context))
 
-def index(request):
+def anon_home(request):
 	if(request.user.is_authenticated() == False):
         	template = loader.get_template('bfb_app/index.html')
 		ad_list = Advert.objects.filter(status='OPEN').order_by('date')[:6]
@@ -203,14 +192,6 @@ def index(request):
 		template = loader.get_template('bfb_app/artistHome.html')
 		context = RequestContext(request,{'ad_list':ad_list}) 
 		return HttpResponse(template.render(context))
-
-def about(request):
-	template = loader.get_template('bfb_app/about.html')
-	context = RequestContext(request,{})
-	return HttpResponse(template.render(context))
-
-def search(request):
-	context = RequestContext(request)
 
 def add_advert(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
