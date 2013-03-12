@@ -42,7 +42,7 @@ def anon_browse(request):
 def artist_browse(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(status = 'OPEN').order_by('date')
-		template = loader.get_template('bfb/artistBrowse.html')
+		template = loader.get_template('bfb_app/artistBrowse.html')
 		context = RequestContext(request,{'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 	elif (Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -59,7 +59,7 @@ def artist_browse(request):
 def artist_applied_gigs(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(artist=Artist.objects.filter(username=request.user.username)).order_by('date')
-		template = loader.get_template('bfb/appliedGigs.html')
+		template = loader.get_template('bfb_app/appliedGigs.html')
 		context = RequestContext(request,{'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 	elif  (Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
