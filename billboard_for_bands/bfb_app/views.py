@@ -140,9 +140,8 @@ def artistHome(request):
 			context = RequestContext(request,{'ad_list':ad_list,'applied_list':applied_list}) 
 			return HttpResponse(template.render(context))
 	elif request.method == 'POST' and request.user.is_authenticated():
-		advert_title = request.POST['']
-		date = request.POST['']
-		advert = Advert.objects.filter(title=advert_title)
+		advert_pk = request.POST['advertID']
+		advert = Advert.objects.filter(pk=advert_pk)
 		if(advert.count > 0):
 			for ad in advert:
 				ad.artist = Artist.filter.object(username=request.user.username);
