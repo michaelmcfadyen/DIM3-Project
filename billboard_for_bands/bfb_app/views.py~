@@ -18,7 +18,6 @@ import datetime
 
 def review(request):
 	advert = Advert.objects.filter(status='CLOSED')[0]
-	artist_list = advert.artist
 	advert.status = 'CHOSEN'
 	template = loader.get_template('bfb_app/review.html')
 	context = RequestContext(request,{'advert':advert}) 
