@@ -184,10 +184,21 @@ def artistProfile(request):
 #		return render_to_response('',{},context)
 
 def index(request):
-        template = loader.get_template('bfb_app/index.html')
-	ad_list = Advert.objects.all().order_by('date')[:10]
-        context = RequestContext(request, {'ad_list':ad_list})
-        return HttpResponse(template.render(context))
+	if(request.user.is_authenticated() == False):
+        	template = loader.get_template('bfb_app/index.html')
+		ad_list = Advert.objects.all().order_by('date')[:10]
+        	context = RequestContext(request, {'ad_list':ad_list})
+        	return HttpResponse(template.render(context))
+	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')[:5]
+		template = loader.get_template('bfb_app/promoterHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
+	else:
+		ad_list = Advert.objects.all().order_by('date')[:5]
+		template = loader.get_template('bfb_app/artistHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
 
 def about(request):
 	template = loader.get_template('bfb_app/about.html')
