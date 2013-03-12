@@ -25,7 +25,7 @@ def register(request):
 def anon_browse(request):
 	if(request.user.is_authenticated() == False):
 		ad_list = Advert.objects.all()
-		template = loader.get_template('bfb_app/browse')
+		template = loader.get_template('bfb_app/browse.html')
 		context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 
@@ -68,7 +68,7 @@ def promoterHome(request):
 		context = RequestContext(request,{}) 
 		return HttpResponse(template.render(context))
 
-def reviewSubmission(request):
+def reviewSubmissions(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(status = CLOSED, promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')
 		template = loader.get_template('bfb_app/reviewSubmission.html')

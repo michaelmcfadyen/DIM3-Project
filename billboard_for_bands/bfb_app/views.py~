@@ -25,7 +25,7 @@ def register(request):
 def anon_browse(request):
 	if(request.user.is_authenticated() == False):
 		ad_list = Advert.objects.all()
-		template = loader.get_template('bfb_app/browse')
+		template = loader.get_template('bfb_app/browse.html')
 		context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 
@@ -38,18 +38,6 @@ def advertProfile(request):
 			template = loader.get_template('bfb_app/advertProfile')
 			context = RequestContext(request,{'advert' : advert})
 			return HttpResponse(template.render(context))
-
-def artistProfile(request):
-	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		profile = Artist.objects.filter(username=request.user.username)[0]
-		print profile
-		template = loader.get_template('bfb_app/artistProfile.html')
-		context = RequestContext(request,{profile})
-		return HttpResponse(template.render(context))
-	else:
-		template = loader.get_template('bfb_app/index.html')
-		context = RequestContext(request,{}) 
-		return HttpResponse(template.render(context))
 		
 
 def promoterProfile(request):
@@ -80,7 +68,7 @@ def promoterHome(request):
 		context = RequestContext(request,{}) 
 		return HttpResponse(template.render(context))
 
-def reviewSubmission(request):
+def reviewSubmissions(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(status = CLOSED, promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')
 		template = loader.get_template('bfb_app/reviewSubmission.html')
@@ -117,6 +105,18 @@ def artistHome(request):
 	elif Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():	
 		template = loader.get_template('bfb_app/promoterHome.html')
 		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('bfb_app/index.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
+
+def artistProfile(request):
+	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		profile = Artist.objects.filter(username=request.user.username)[0]
+		print profile
+		template = loader.get_template('bfb_app/artistProfile.html')
+		context = RequestContext(request,{profile})
 		return HttpResponse(template.render(context))
 	else:
 		template = loader.get_template('bfb_app/index.html')

@@ -17,6 +17,7 @@ urlpatterns = patterns('',
 	url(r'^PromoterProfile',views.promoterProfile, name = 'Promoter Profile'),
 	url(r'^ArtistProfile',views.artistProfile, name = 'Artist Profile'),
 	url(r'^AdvertProfile',views.advertProfile, name = 'Advert Profile'),
+	url(r'^reviewSubmissions',views.reviewSubmissions, name = 'Review Submissions'),
 	url(r'^browse',views.anon_browse,name = 'Browse')
 
 )
