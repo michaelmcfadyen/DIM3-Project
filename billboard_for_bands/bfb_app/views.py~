@@ -66,7 +66,7 @@ def artist_browse(request):
 	elif (Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		return HttpResponseRedirect('/PromoterHome')
 	else:
-		return HttpResponseRedirect('/index')
+		return HttpResponseRedirect('/')
 
 def artist_applied_gigs(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -77,7 +77,7 @@ def artist_applied_gigs(request):
 	elif  (Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		return HttpResponseRedirect('/promoterHome')
 	else:
-		return HHttpResponseRedirect('/index')
+		return HHttpResponseRedirect('/')
 
 def promoterProfile(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -87,7 +87,7 @@ def promoterProfile(request):
 		context = RequestContext(request,{'profile':profile})
 		return HttpResponse(template.render(context))
 	else:
-		return HttpResponseRedirect('/index')
+		return HttpResponseRedirect('/')
 
 def promoterHome(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -99,7 +99,7 @@ def promoterHome(request):
 	elif Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():
 		return HttpResponseRedirect('/artistHome')
 	else:
-		return HttpResponseRedirect('/index')
+		return HttpResponseRedirect('/')
 
 def reviewSubmissions(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
@@ -110,7 +110,7 @@ def reviewSubmissions(request):
 	elif Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():
 		return HttpResponseRedirect('/artistHome')
 	else:
-		return HttpResponseRedirect('/index')
+		return HttpResponseRedirect('/')
 
 @csrf_exempt
 def artistHome(request):
@@ -136,7 +136,7 @@ def artistProfile(request):
 	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		return HttpResponseRedirect('/promoterHome')
 	else:
-		return HttpResponseRedirect('/index')
+		return HttpResponseRedirect('/')
 
 def add_advert(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
