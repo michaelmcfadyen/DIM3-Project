@@ -1,13 +1,45 @@
 {% extends 'bfb_app/base.html' %}
 {% block content %}
+<!-- NAV BAR -->
+<div class="navbar">
+    <div class="navbar-inner" style="-webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; overflow:hidden; top=100px;">
+    <div class="container">
+	<div class="span12">
+		<ul class="nav">
+        	<li class="active"><a href="/bfb_app/">Home</a></li>
+            <li><a href="/bfb_app/browse">Browse</a></li>
+        </ul>
+		<form class="navbar-form pull-right">
+	      	
+			{% if user.is_authenticated %}
+			Welcome {{ user.username }}  |
+			<a href="/bfb_app/logout/"> Logout </a>
+			{% else %}
+			<div class="btn-group">
+				<a class="btn dropdown-toggle" data-toggle="dropdown" id="registerbutton" href="#">Register <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" id="registerDropdown">
+					<li><A href="/bfb_app/register/artist">Artist</A><li>
+					<li><A href="/bfb_app/register/promoter">Promoter</A><li>
+				</ul>
+				<A href="/bfb_app/login/"><button class="btn" type="button" id="showloginbutton" onclick ="this.style.visibility= 'hidden';">Login</button></A>
+			</div>
+			{% endif %}
+		</form>
+	</div>
+    </div>
+    </div>
+</div><!-- /.navbar -->
+
 {% if registered %}
-        <A href="/bfb_app/">WE</A> says: thank you for registering.
+        <font color="white"><h3>Thank you for registering! Please log in.</h3></font>
 {% else %}
-        WE says: register here!
+        <FONT COLOR="white"><h3>WE says: register here!
         <FORM id="promoter_form" method="post" action="/bfb_app/register/promoter/" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ uform.as_p }}
                 <INPUT type="submit" name="submit" value="submit" />
         </FORM>
+	</FONT>
 {% endif %}
 {% endblock %}

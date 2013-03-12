@@ -33,11 +33,14 @@
 </div><!-- /.navbar -->
 
 <font color="white">
+<h3>Please use following details to get in touch with artist of choice.</h3>
 {% if advert.artist.all %}
 {% for artist in advert.artist.all %}
 	Name: {{artist.name}} <br>
 	Website: {{artist.website}} <br>
 	Genre: {{artist.genre}} <br>
+	Email: {{artist.email}} <br>
+	Phone: {{artist.phone_number}} <br><br>
 {% endfor %}
 {% else %}
 <h3>No applicants.</h3>

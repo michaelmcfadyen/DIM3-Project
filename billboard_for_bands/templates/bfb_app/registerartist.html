@@ -33,9 +33,9 @@
 
 
 {% if registered %}
-        <A href="/bfb_app/">WE</A> says: thank you for registering.
+        <font color="white"><h3>Thank you for registering! Please log in.</h3></font>
 {% else %}
-        <FONT COLOR="white">WE says: register here!
+        <FONT COLOR="white"><h3>Register here!</h3>
         <FORM id="artist_form" method="post" action="/bfb_app/register/artist/" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ uform.as_p }}

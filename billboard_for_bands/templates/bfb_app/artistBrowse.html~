@@ -77,7 +77,6 @@
 function apply_click(click_id) {
 	
 	var id_json = {'advertID': click_id};
-
 	$.ajax({
     	url: '/bfb_app/process',
     	type: "POST",

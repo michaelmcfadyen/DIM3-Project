@@ -75,7 +75,14 @@
 <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript">
 function apply_click(click_id) {
-	
+	if ($("#"+click_id).attr("class") == "btn btn-primary") { 
+		$("#"+click_id).attr("class","btn btn-danger");
+		$("#"+click_id).text("Withdraw");
+	}
+	else {
+		$("#"+click_id).attr("class","btn btn-primary");
+		$("#"+click_id).text("Apply");
+	}
 	var id_json = {'advertID': click_id};
 	$.ajax({
     	url: '/bfb_app/process',
@@ -84,14 +91,7 @@ function apply_click(click_id) {
     	data: JSON.stringify(id_json),
     	dataType: 'text', 
     	success: function(result) {
-			if ($("#"+click_id).attr("value") == "Apply") { 
-				$("#"+click_id).attr("class","btn btn-danger");
-				$("#"+click_id).text("Withdraw");
-			}
-			else {
-				$("#'click_id'").attr("class","btn btn-primary");
-				$("#'click_id'").text("Apply");
-			}
+	
    	 	}
 		
 	});	

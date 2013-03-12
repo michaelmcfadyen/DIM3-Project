@@ -5,8 +5,8 @@
     <div class="container">
 	<div class="span12">
 		<ul class="nav">
-        	<li class="active"><a href="/bfb_app/PromoterHome">Home</a></li>
-            <li><a href="/bfb_app/adv_add">Create Gig</a></li>
+        	<li><a href="/bfb_app/PromoterHome">Home</a></li>
+            <li class="active"><a href="/bfb_app/adv_add">Create Gig</a></li>
 			<li><a href="/bfb_app/PromoterProfile">Edit Profile</a></li>
 			<li><a href="/bfb_app/reviewSubmissions">Review Submissions</a></li>
         </ul>

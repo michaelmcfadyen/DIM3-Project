@@ -40,7 +40,8 @@
 	<th>Venue</th>
 	<th>Artist</th>  
 	<th>Date</th>
-	<th>No. of Applicants</th>     
+	<th>No. of Applicants</th> 
+	<th>Status</th>       
 	</tr>  
 </thead>
   
@@ -51,6 +52,7 @@
 	<td>{{ad.band}}</td>
 	<td>{{ad.date}}</td>
 	<td>{{ad.artist.count}}</td>
+	<td>{{ad.status}}</td>
 	<tr>
 	{% endfor %}
 </table>
