@@ -111,10 +111,10 @@ def advertProfile(request):
 
 def promoterProfile(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		profile = Promoter.objects.filter(username=request.user.username)[0]
+		profile = Promoter.objects.get(username=request.user.username)
 		print profile
 		template = loader.get_template('bfb_app/promoterProfile.html')
-		context = RequestContext(request,{profile})
+		context = RequestContext(request,{'profile':profile})
 		return HttpResponse(template.render(context))
 	else:
 		template = loader.get_template('bfb_app/index.html')

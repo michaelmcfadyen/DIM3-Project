@@ -212,7 +212,7 @@ def artistProfile(request):
 def index(request):
 	if(request.user.is_authenticated() == False):
         	template = loader.get_template('bfb_app/index.html')
-		ad_list = Advert.objects.all().order_by('date')[:10]
+		ad_list = Advert.objects.filter(status='OPEN').order_by('date')[:10]
         	context = RequestContext(request, {'ad_list':ad_list})
         	return HttpResponse(template.render(context))
 	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
