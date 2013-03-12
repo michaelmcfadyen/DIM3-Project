@@ -56,6 +56,23 @@ def artist_browse(request):
         	context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 
+def artist_applied_gigs(request):
+	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		ad_list = Advert.objects.filter(artist=Artist.objects.filter(username=request.user.username)).order_by('date')
+		template = loader.get_template('bfb/appliedGigs.html')
+		context = RequestContext(request,{'ad_list':ad_list})
+		return HttpResponse(template.render(context))
+	elif  (Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')[:5]
+		template = loader.get_template('bfb_app/promoterHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('bfb_app/index.html')
+		ad_list = Advert.objects.all().order_by('date')[:10]
+        	context = RequestContext(request, {'ad_list':ad_list})
+		return HttpResponse(template.render(context))
+
 def advertProfile(request):
 	context = RequestContext(request)
 	if request.method == 'POST':
