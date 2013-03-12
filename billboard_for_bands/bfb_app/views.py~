@@ -98,7 +98,7 @@ def promoterHome(request):
 def reviewSubmissions(request):
 	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(status = 'CL', promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')
-		template = loader.get_template('bfb_app/reviewSubmission.html')
+		template = loader.get_template('bfb_app/reviewSubmissions.html')
 		context = RequestContext(request,{'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 	elif Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():

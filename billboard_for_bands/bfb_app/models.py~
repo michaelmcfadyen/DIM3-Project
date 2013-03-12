@@ -36,7 +36,6 @@ class Promoter(User):
 	def __unicode__(self):
              return self.name
 
-MY_DATE_FORMATS = ['%d/%m/%Y',]
 class Advert(models.Model):
 	genre = models.ForeignKey(Genre)
 	promoter=models.ForeignKey(Promoter,null=True,blank=True)
@@ -45,7 +44,7 @@ class Advert(models.Model):
 	title = models.CharField(max_length = 50)
 	start_time = models.TimeField()
 	duration = models.TimeField()
-	date = models.DateField(input_formats=MY_DATE_FORMATS)
+	date = models.DateField()
 	description = models.CharField(max_length=5000)
 	band = models.CharField(max_length=50)
 	OPEN = 'OP'
