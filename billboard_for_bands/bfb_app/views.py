@@ -23,7 +23,7 @@ def process(request):
 		advert = Advert.objects.filter(pk=advert_pk)
 		if(advert.count > 0):
 			for ad in advert:
-				ad.artist = Artist.filter.object(username=request.user.username);
+				ad.artist = Artist.object.filter(username=request.user.username);
 			return render_to_response('bfb_app/artistHome.html',{},context)
 		else:
 			print 'advert does not exist'
@@ -169,7 +169,7 @@ def artistHome(request):
 		advert = Advert.objects.filter(pk=advert_pk)
 		if(advert.count > 0):
 			for ad in advert:
-				ad.artist = Artist.filter.object(username=request.user.username);
+				ad.artist = Artist.object.filter(username=request.user.username);
 			return render_to_response('bfb_app/artistHome.html',{},context)
 		else:
 			print 'advert does not exist'
