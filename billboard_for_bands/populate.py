@@ -56,9 +56,6 @@ venue.save()
 venue = Venue(name="Pivo Pivo", address="15 Waterloo St  Glasgow G2 6AY", website="https://plus.google.com/110023145115812766440/about?gl=uk&hl=en")
 venue.save
     
-promoter = Promoter(username='michaelmcfadyen', password='michaelmcfadyen', name='Michael McFadyen', phone_num='07920775454').save()
-promoter = Promoter(username='promoter', password='promoter', name='Promoter', phone_num='07911233428').save()
-    
     
     
     
