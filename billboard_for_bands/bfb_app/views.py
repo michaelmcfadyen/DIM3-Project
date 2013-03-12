@@ -208,7 +208,7 @@ def artistProfile(request):
 		return HttpResponse(template.render(context))
 	else:
        		template = loader.get_template('bfb_app/index.html')
-		ad_list = Advert.objects.all().order_by('date')[:10]
+		ad_list = Advert.objects.all().order_by('date')[:6]
         	context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
 
