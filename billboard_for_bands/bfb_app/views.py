@@ -16,6 +16,10 @@ import json
 import datetime
 	
 
+def review(request):
+	template = loader.get_template('bfb_app/review.html')
+	context = RequestContext(request,{}) 
+	return HttpResponse(template.render(context))
 @csrf_exempt
 def process_submission(request):
 	if request.method == 'POST' and request.user.is_authenticated():
