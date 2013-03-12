@@ -24,7 +24,7 @@ def register(request):
 
 def anon_browse(request):
 	if(request.user.is_authenticated() == False):
-		ad_list = Advert.objects.all()
+		ad_list = Advert.objects.filter(status='OPEN')
 		template = loader.get_template('bfb_app/browse.html')
 		context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
