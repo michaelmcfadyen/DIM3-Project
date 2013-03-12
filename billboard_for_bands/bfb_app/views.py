@@ -28,10 +28,21 @@ def anon_browse(request):
 		template = loader.get_template('bfb_app/browse.html')
 		context = RequestContext(request, {'ad_list':ad_list})
 		return HttpResponse(template.render(context))
+	elif(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')[:5]
+		template = loader.get_template('bfb_app/promoterHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
+	else
+		ad_list = Advert.objects.all().order_by('date')[:5]
+		template = loader.get_template('bfb_app/artistHome.html')
+		context = RequestContext(request,{'ad_list':ad_list}) 
+		return HttpResponse(template.render(context))
+		
 
 def advertProfile(request):
 	context = RequestContext(request)
-	if request.method == 'POST'and request.user.is_authenticated():
+	if request.method == 'POST':
 		advert_title = request.POST['']
 		advert = Advert.object.filter(title=advert_title)[0]
 		if(advert.count == 1):
@@ -114,14 +125,13 @@ def artistHome(request):
 def artistProfile(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		profile = Artist.objects.filter(username=request.user.username)[0]
-		print profile
 		template = loader.get_template('bfb_app/artistProfile.html')
 		context = RequestContext(request,{profile})
 		return HttpResponse(template.render(context))
 	else:
-		template = loader.get_template('bfb_app/index.html')
-		context = RequestContext(request,{}) 
-		return HttpResponse(template.render(context))
+       		template = loader.get_template('bfb_app/index.html')
+		ad_list = Advert.objects.all().order_by('date')[:10]
+        	context = RequestContext(request, {'ad_list':ad_list})
 
 #def artist_applies(request):
 ##	
@@ -139,14 +149,9 @@ def artistProfile(request):
 #		return render_to_response('',{},context)
 
 def index(request):
-        # select the appropriate template to use
         template = loader.get_template('bfb_app/index.html')
-        # create and define the context. We don't have any context at the moment
-        # but later on we will be putting data in the context which the template engine
-        # will use when it renders the template into a page.
 	ad_list = Advert.objects.all().order_by('date')[:10]
         context = RequestContext(request, {'ad_list':ad_list})
-        # render the template using the provided context and return as http response.
         return HttpResponse(template.render(context))
 
 def about(request):
