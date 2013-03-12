@@ -42,9 +42,10 @@ def anon_browse(request):
 def artist_browse(request):
 	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(status='OPEN').order_by('date')
+		applied_list = Advert.objects.filter(status='OPEN',artist=Artist.object.filter(username=request.user.username))
 		template = loader.get_template('bfb_app/artistBrowse.html')
-		context = RequestContext(request,{'ad_list':ad_list})
-		print ad_list
+		context = RequestContext(request,{'ad_list':ad_list,'applied_list':applied_list})
+		print applied_list
 		return HttpResponse(template.render(context))
 	elif (Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 		ad_list = Advert.objects.filter(promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')[:5]
@@ -134,8 +135,9 @@ def artistHome(request):
 	if request.method == 'GET':
 		if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
 			ad_list = Advert.objects.filter(status='OPEN').order_by('date')[:5]
+			applied_list = Advert.objects.filter(status='OPEN',artist=Artist.object.filter(username=request.user.username))
 			template = loader.get_template('bfb_app/artistHome.html')
-			context = RequestContext(request,{'ad_list':ad_list}) 
+			context = RequestContext(request,{'ad_list':ad_list,'applied_list':applied_list}) 
 			return HttpResponse(template.render(context))
 	elif request.method == 'POST' and request.user.is_authenticated():
 		advert_title = request.POST['']
