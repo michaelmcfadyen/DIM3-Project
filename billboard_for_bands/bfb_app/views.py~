@@ -29,9 +29,9 @@ def process_submission(request):
 		advert_pk = json_data['advertID']
 		print 'here'
 		advert = Advert.objects.get(pk=advert_pk)
-		advert.status='CHOSEN'
 		print advert
-		return HttpResponseRedirect("/bfb_app/review")
+		context = RequestContext(request,{'advert':advert}
+		return render_to_response('bfb_app/reviewSubmissions.html', {}, context)
 	else:
 		print 'else'
 		template = loader.get_template('bfb_app/index.html')

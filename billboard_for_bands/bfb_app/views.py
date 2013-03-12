@@ -16,12 +16,6 @@ import json
 import datetime
 	
 
-def review(request):
-	template = loader.get_template('bfb_app/review.html')
-	ad_list = Advert.objects.filter(status='CHOSEN')
-	context = RequestContext(request,{'ad_list',ad_list}) 
-	return HttpResponse(template.render(context))
-
 @csrf_exempt
 def process_submission(request):
 	if request.method == 'POST' and request.user.is_authenticated():
@@ -29,10 +23,9 @@ def process_submission(request):
 		advert_pk = json_data['advertID']
 		print 'here'
 		advert = Advert.objects.get(pk=advert_pk)
-		advert.status='CHOSEN'
-		print advert.status
 		print advert
-		return HttpResponseRedirect("/bfb_app/review")
+		context = RequestContext(request,{'advert':advert}
+		return render_to_response('bfb_app/reviewSubmissions.html', {}, context)
 	else:
 		print 'else'
 		template = loader.get_template('bfb_app/index.html')
