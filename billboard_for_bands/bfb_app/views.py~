@@ -129,7 +129,7 @@ def reviewSubmissions(request):
 		context = RequestContext(request,{}) 
 		return HttpResponse(template.render(context))
 
-
+@csrf_exempt
 def artistHome(request):
 	context = RequestContext(request)
 	if request.method == 'GET':
@@ -140,7 +140,7 @@ def artistHome(request):
 			context = RequestContext(request,{'ad_list':ad_list,'applied_list':applied_list}) 
 			return HttpResponse(template.render(context))
 	elif request.method == 'POST' and request.user.is_authenticated():
-		advert_pk = request.POST['pk']
+		advert_pk = request.POST['advertID']
 		advert = Advert.objects.filter(pk=advert_pk)
 		if(advert.count > 0):
 			for ad in advert:

@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django import forms
+from django.views.decorators.csrf import csrf_exempt
 import datetime
 
 def base(request):
@@ -129,7 +130,7 @@ def reviewSubmissions(request):
 		context = RequestContext(request,{}) 
 		return HttpResponse(template.render(context))
 
-
+@csrf_exempt
 def artistHome(request):
 	context = RequestContext(request)
 	if request.method == 'GET':
