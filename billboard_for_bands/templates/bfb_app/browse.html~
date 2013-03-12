@@ -32,13 +32,13 @@
 {% if ad_list %}
 
 <h2>All gigs</h2>
-<table class="table table-striped" id="gigtable">
+<table class="table" id="gigtable">
 <thead>
 	<tr>  
-	<th><font color="f9f9f9">Venue</th></font> 
-	<th><font color="f9f9f9">Artist</th></font>  
-	<th><font color="f9f9f9">Date</th></font>
-	<th><font color="f9f9f9">No. of Applicants</th></font>     
+	<th>Venue</th> 
+	<th>Artist</th>  
+	<th>Date</th>
+	<th>No. of Applicants</th>     
 	</tr>  
 </thead>
   
@@ -59,11 +59,6 @@
 
 <div id="about">
 <p>
-<h2>About</h2>
-<font color="f9f9f9">Billboard for Bands is a platform for communication. <p>
-<h2><span class="icon-ok-circle"></span> Promoters advertise. <p>
-<span class="icon-ok-circle"></span> Bands apply.</h2>
-
 </font>
 </p>
 </div>

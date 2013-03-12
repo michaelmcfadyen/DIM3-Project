@@ -11,7 +11,7 @@
 			<li class="active"><a href="/bfb_app/reviewSubmissions">Review Submission</a></li>
         </ul>
 		<form class="navbar-form pull-right">
-	      	<input type="text" class="search-query span3" id="searchPlease" placeholder="Advert or Venue">
+	      
 			{% if user.is_authenticated %}
 			Welcome {{ user.username }}  |
 			<a href="/bfb_app/logout/"> Logout </a>
@@ -33,15 +33,20 @@
 </div><!-- /.navbar -->
 {% if ad_list %}
 
+<div class="span2">
 <h2>All gigs</h2>
-<table class="table table-striped" id="gigtable">
+<li><a href="/bfb_app/review" class="btn btn-primary" type="button" id="reviewbtn"> Choose Band</a></li>
+
+</div>
+
+<table class="table" id="gigtable">
 <thead>
 	<tr>  
-	<th><font color="f9f9f9">Venue</th></font> 
-	<th><font color="f9f9f9">Artist</th></font>  
-	<th><font color="f9f9f9">Date</th></font>
-	<th><font color="f9f9f9">No. of Applicants</th></font>
-	<th><font color="f9f9f9">Status</th></font>
+	<th>Venue</th>
+	<th>Artist</th> 
+	<th>Date</th>
+	<th>No. of Applicants</th>
+	<th>Status</th>
 	</tr>  
 </thead>
   
@@ -52,18 +57,41 @@
 	<td>{{ad.band}}</td>
 	<td>{{ad.date}}</td>
 	<td>{{ad.artist.count}}</td>
-	<td>{{ad.status}}
+	<td>{{ad.status}}</td>
 	<tr>
 	{% endfor %}
 </table>
 {% else %}
         <h3>No Adverts at present.</h3>
 {% endif %}
-{% endblock %}
 
-<div id="about">
-<p>
-</font>
-</p>
-</div>
-<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
+
+<script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<script type="text/javascript">
+function review_click(click_id) {
+
+	var id_json = {'advertID': click_id};
+	//alert("id is " + click_id);
+	$.ajax({
+    	url: '/bfb_app/reviewSubmissions',
+    	type: "POST",
+    	contentType: 'application/json; charset=utf-8',
+    	data: JSON.stringify(id_json),
+    	dataType: 'text', 
+        success: function(result) {
+			window.location="chooseArtist.html";
+			var html = '';
+			for (var i=0; i < result.artist.length; i++) {
+				html += "<tr>";
+				html += "<td>" + result.artist[i].name + "</td>";
+				html += "<td>" + result.artist[i].genre + "</td>";
+				html += "<td>" + result.artist[i].description + "</td>";
+				html += "<td>" + result.artist[i].website + "</td>";
+				html += "</tr>";
+				$("#tablerow").append(html);
+			}
+   	 	}
+	});	
+}
+</script>
+{% endblock %}
