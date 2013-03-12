@@ -21,6 +21,7 @@ def review(request):
 	ad_list = Advert.objects.get(status='CHOSEN')
 	context = RequestContext(request,{'ad_list',ad_list}) 
 	return HttpResponse(template.render(context))
+
 @csrf_exempt
 def process_submission(request):
 	if request.method == 'POST' and request.user.is_authenticated():
