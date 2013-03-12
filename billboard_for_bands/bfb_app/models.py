@@ -51,7 +51,7 @@ class Advert(models.Model):
 	CLOSED = 'CLOSED'
 	CHOSEN = 'CHOSEN'
 	status_choices = ((OPEN,'open'), (CLOSED,'closed'), (CHOSEN, 'chosen'),)
-	status = models.CharField(max_length = 2, choices=status_choices,default=OPEN)
+	status = models.CharField(max_length = 6, choices=status_choices,default=OPEN)
 
 	def __unicode__(self):
              return self.title

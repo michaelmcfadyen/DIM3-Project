@@ -89,8 +89,4 @@ class ArtistForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
         class Meta:
                 model = UserProfile
-class chooseBand(forms.ModelForm):
-	class Meta:
-		model = Advert
-		fields = ["artist"]
 
