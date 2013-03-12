@@ -16,7 +16,7 @@ import datetime
 @csrf_exempt
 def process(request):
 	if request.method == 'POST' and request.user.is_authenticated():
-		json_data = simplejson.loads(request.raw_post_data)
+		json_data = json.loads(request.raw_post_data)
 		advert_pk = json_data['advertID']
 		print 'here'
 		advert = Advert.objects.filter(pk=advert_pk)
