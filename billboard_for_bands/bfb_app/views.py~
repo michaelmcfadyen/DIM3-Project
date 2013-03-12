@@ -24,6 +24,7 @@ def process(request):
 		if(advert.count > 0):
 			for ad in advert:
 				ad.artist = Artist.objects.filter(username=request.user.username);
+			context = RequestContext(request,{})
 			return render_to_response('bfb_app/artistHome.html',{},context)
 		else:
 			print 'advert does not exist'
