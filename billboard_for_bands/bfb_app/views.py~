@@ -20,7 +20,7 @@ def process(request):
 		json_data = json.loads(request.raw_post_data)
 		advert_pk = json_data['advertID']
 		print 'here'
-		advert = Advert.objects.filter(pk=advert_pk)
+		advert = Advert.objects.get(pk=advert_pk)
 		artist_user = Artist.objects.filter(username=request.user.username)
 		advert.artist.add(artist_user)
 		context = RequestContext(request,{})
