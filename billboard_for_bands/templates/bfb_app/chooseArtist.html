@@ -58,7 +58,6 @@
 function review_click(click_id) {
 
 	var id_json = {'advertID': click_id};
-	alert("id is " + click_id);
 	$.ajax({
     	url: '/bfb_app/submission_review',
     	type: "POST",

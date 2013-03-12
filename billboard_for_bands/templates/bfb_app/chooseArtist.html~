@@ -7,7 +7,7 @@
 		<ul class="nav">
         	<li><a href="/bfb_app/PromoterHome">Home</a></li>
             <li><a href="/bfb_app/adv_add">Create Gig</a></li>
-			<li><a href="/bfb_app/PromoterProfile">Edit Profile</a></li>
+			<li><a href="/bfb_app/PromoterProfile">View Profile</a></li>
 			<li class="active"><a href="/bfb_app/reviewSubmissions">Review Submission</a></li>
         </ul>
 		<form class="navbar-form pull-right">

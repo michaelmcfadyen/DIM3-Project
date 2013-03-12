@@ -93,7 +93,7 @@ function apply_click(click_id) {
 			}
 			else {
 				$("#'click_id'").attr("class","btn btn-primary");
-				$("#'click_id'").attr("value", "Apply");
+				$("#'click_id'").text("Apply");
 			}
    	 	}
 		
