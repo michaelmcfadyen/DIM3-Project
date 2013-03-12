@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django import forms
+import datetime
 
 def base(request):
 	template = loader.get_template('bfb_app/base.html')
@@ -37,18 +38,6 @@ def advertProfile(request):
 			template = loader.get_template('bfb_app/advertProfile')
 			context = RequestContext(request,{'advert' : advert})
 			return HttpResponse(template.render(context))
-
-def artistProfile(request):
-	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
-		profile = Artist.objects.filter(username=request.user.username)[0]
-		print profile
-		template = loader.get_template('bfb_app/artistProfile.html')
-		context = RequestContext(request,{profile})
-		return HttpResponse(template.render(context))
-	else:
-		template = loader.get_template('bfb_app/index.html')
-		context = RequestContext(request,{}) 
-		return HttpResponse(template.render(context))
 		
 
 def promoterProfile(request):
@@ -78,7 +67,22 @@ def promoterHome(request):
 		template = loader.get_template('bfb_app/index.html')
 		context = RequestContext(request,{}) 
 		return HttpResponse(template.render(context))
-			
+
+def reviewSubmission(request):
+	if(Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		ad_list = Advert.objects.filter(status = CLOSED, promoter = Promoter.objects.filter(username=request.user.username)).order_by('date')
+		template = loader.get_template('bfb_app/reviewSubmission.html')
+		context = RequestContext(request,{'ad_list':ad_list})
+		return HttpResponse(template.render(context))
+	elif Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():
+		template = loader.get_template('bfb_app/artistHome.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('bfb_app/index.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
+
 
 def artistHome(request):
 	context = RequestContext(request)
@@ -101,6 +105,18 @@ def artistHome(request):
 	elif Promoter.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated():	
 		template = loader.get_template('bfb_app/promoterHome.html')
 		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('bfb_app/index.html')
+		context = RequestContext(request,{}) 
+		return HttpResponse(template.render(context))
+
+def artistProfile(request):
+	if(Artist.objects.filter(username=request.user.username).count() > 0 and request.user.is_authenticated()):
+		profile = Artist.objects.filter(username=request.user.username)[0]
+		print profile
+		template = loader.get_template('bfb_app/artistProfile.html')
+		context = RequestContext(request,{profile})
 		return HttpResponse(template.render(context))
 	else:
 		template = loader.get_template('bfb_app/index.html')
@@ -152,9 +168,11 @@ def add_advert(request):
                 	        # the form has been correctly filled in,
                 	        # so lets save the data to the model
                 	        ad = form.save(commit=False)
-	
+				if (ad.date < datetime.date.today()):
+					ad.status = 'CL'
+				else:
+					ad.status = 'OP'
 				ad.promoter = Promoter.objects.filter(username=request.user.username)[0]
-				ad.status = 'OP'
 				ad.save()
                 	        # show the index page with the list of categories
                 	        return promoterHome(request)
