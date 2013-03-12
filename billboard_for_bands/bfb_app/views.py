@@ -24,7 +24,8 @@ def process(request):
 		print advert
 		artist_user = Artist.objects.filter(username=request.user.username)
 		print artist_user
-		advert.artist.add(artist_user)
+		advert.artist.add(Artist(username=artist_user.username,password=artist_user.password,
+				 name=artist_user.name,phone_number=artist_user.phone_number,description=artist_user.description).save())
 		context = RequestContext(request,{})
 		return render_to_response('bfb_app/artistHome.html',{},context)
 	else:

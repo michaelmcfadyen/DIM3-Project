@@ -21,7 +21,9 @@ def process(request):
 		advert_pk = json_data['advertID']
 		print 'here'
 		advert = Advert.objects.get(pk=advert_pk)
+		print advert
 		artist_user = Artist.objects.filter(username=request.user.username)
+		print artist_user
 		advert.artist.add(artist_user)
 		context = RequestContext(request,{})
 		return render_to_response('bfb_app/artistHome.html',{},context)
